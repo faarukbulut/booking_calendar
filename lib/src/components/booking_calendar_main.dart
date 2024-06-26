@@ -164,8 +164,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                 children: [
                   CommonCard(
                     child: TableCalendar(
-                      startingDayOfWeek: widget.startingDayOfWeek?.toTC() ??
-                          tc.StartingDayOfWeek.monday,
+                      startingDayOfWeek: widget.startingDayOfWeek?.toTC() ?? tc.StartingDayOfWeek.monday,
                       holidayPredicate: (day) {
                         if (widget.disabledDates == null) return false;
 
@@ -199,12 +198,10 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                       },
                       locale: widget.locale,
                       firstDay: calculateFirstDay(),
-                      lastDay: widget.lastDay ??
-                          DateTime.now().add(const Duration(days: 1000)),
+                      lastDay: widget.lastDay ?? DateTime.now().add(const Duration(days: 1000)),
                       focusedDay: _focusedDay,
                       calendarFormat: _calendarFormat,
-                      calendarStyle:
-                          const CalendarStyle(isTodayHighlighted: true),
+                      calendarStyle: const CalendarStyle(isTodayHighlighted: true),
                       selectedDayPredicate: (day) {
                         return isSameDay(_selectedDay, day);
                       },
@@ -216,6 +213,11 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           });
                           selectNewDateRange();
                         }
+                      },
+                      availableCalendarFormats: const{ // Bu düzen pakette hatalı yapılmış. Şimdilik textleri özelleştirerek hallettim.
+                        CalendarFormat.month: 'Hafta',
+                        CalendarFormat.twoWeeks: 'Ay',
+                        CalendarFormat.week: '2 Hafta',
                       },
                       onFormatChanged: (format) {
                         if (_calendarFormat != format) {
