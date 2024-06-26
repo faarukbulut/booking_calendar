@@ -17,6 +17,7 @@ class BookingCalendar extends StatelessWidget {
       required this.twoWeekCustomText,
       required this.monthCustomText,
       required this.selectedRadio,
+      required this.radioOnChanged,
       this.bookingExplanation,
       this.bookingGridCrossAxisCount,
       this.bookingGridChildAspectRatio,
@@ -154,6 +155,7 @@ class BookingCalendar extends StatelessWidget {
   final String twoWeekCustomText;
   final String monthCustomText;
   final int selectedRadio;
+  final ValueChanged<int> radioOnChanged;
 
 
   @override
@@ -169,6 +171,7 @@ class BookingCalendar extends StatelessWidget {
         twoWeekCustomText: twoWeekCustomText,
         monthCustomText: monthCustomText,
         selectedRadio: selectedRadio,
+        radioOnChanged: radioOnChanged,
         bookingButtonColor: bookingButtonColor,
         bookingButtonText: bookingButtonText,
         bookingExplanation: bookingExplanation,

@@ -104,6 +104,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               twoWeekCustomText: twoWeekCustomText,
               monthCustomText: monthCustomText,
               selectedRadio: selectedRadio,
+              radioOnChanged: (val){},
               pauseSlots: generatePauseSlots(),
               pauseSlotText: 'LUNCH',
               hideBreakTime: false,

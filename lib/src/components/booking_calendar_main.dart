@@ -25,6 +25,7 @@ class BookingCalendarMain extends StatefulWidget {
     required this.twoWeekCustomText,
     required this.monthCustomText,
     required this.selectedRadio,
+    required this.radioOnChanged,
     this.bookingExplanation,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
@@ -100,6 +101,7 @@ class BookingCalendarMain extends StatefulWidget {
   final String twoWeekCustomText;
   final String monthCustomText;
   late int selectedRadio;
+  final ValueChanged<int> radioOnChanged;
 
   @override
   State<BookingCalendarMain> createState() => _BookingCalendarMainState();
@@ -352,6 +354,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                         onChanged: (val){
                           setState(() {
                             widget.selectedRadio = val as int;
+                            widget.radioOnChanged(val);
                           });
                         },
                       ),
@@ -363,6 +366,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                         onChanged: (val){
                           setState(() {
                             widget.selectedRadio = val as int;
+                            widget.radioOnChanged(val);
                           });
                         },
                       ),
@@ -374,6 +378,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                         onChanged: (val){
                           setState(() {
                             widget.selectedRadio = val as int;
+                            widget.radioOnChanged(val);
                           });
                         },
                       ),
@@ -385,6 +390,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                         onChanged: (val){
                           setState(() {
                             widget.selectedRadio = val as int;
+                            widget.radioOnChanged(val);
                           });
                         },
                       ),
@@ -396,6 +402,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                         onChanged: (val){
                           setState(() {
                             widget.selectedRadio = val as int;
+                            widget.radioOnChanged(val);
                           });
                         },
                       ),
