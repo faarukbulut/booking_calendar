@@ -343,9 +343,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                       );
                     },
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
                       Radio(
@@ -404,6 +402,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                       const Text('Tüm Gün'),
                     ],
                   ),
+                  const SizedBox(height: 16),
                   CommonButton(
                     text: widget.bookingButtonText ?? 'BOOK',
                     onTap: () async {
