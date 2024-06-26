@@ -21,6 +21,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   String weekCustomText = "Hafta";
   String twoWeekCustomText = "2 Hafta";
   String monthCustomText = "Ay";
+  int selectedRadio = 15;
 
   @override
   void initState() {
@@ -102,6 +103,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               weekCustomText: weekCustomText,
               twoWeekCustomText: twoWeekCustomText,
               monthCustomText: monthCustomText,
+              selectedRadio: selectedRadio,
               pauseSlots: generatePauseSlots(),
               pauseSlotText: 'LUNCH',
               hideBreakTime: false,

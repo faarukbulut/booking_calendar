@@ -14,8 +14,9 @@ import 'booking_slot.dart';
 import 'common_button.dart';
 import 'common_card.dart';
 
+// ignore: must_be_immutable
 class BookingCalendarMain extends StatefulWidget {
-  const BookingCalendarMain({
+  BookingCalendarMain({
     Key? key,
     required this.getBookingStream,
     required this.convertStreamResultToDateTimeRanges,
@@ -23,6 +24,7 @@ class BookingCalendarMain extends StatefulWidget {
     required this.weekCustomText,
     required this.twoWeekCustomText,
     required this.monthCustomText,
+    required this.selectedRadio,
     this.bookingExplanation,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
@@ -53,12 +55,9 @@ class BookingCalendarMain extends StatefulWidget {
     this.lastDay,
   }) : super(key: key);
 
-  final Stream<dynamic>? Function(
-      {required DateTime start, required DateTime end}) getBookingStream;
-  final Future<dynamic> Function({required BookingService newBooking})
-      uploadBooking;
-  final List<DateTimeRange> Function({required dynamic streamResult})
-      convertStreamResultToDateTimeRanges;
+  final Stream<dynamic>? Function({required DateTime start, required DateTime end}) getBookingStream;
+  final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
+  final List<DateTimeRange> Function({required dynamic streamResult}) convertStreamResultToDateTimeRanges;
 
   ///Customizable
   final Widget? bookingExplanation;
@@ -100,6 +99,7 @@ class BookingCalendarMain extends StatefulWidget {
   final String weekCustomText;
   final String twoWeekCustomText;
   final String monthCustomText;
+  late int selectedRadio;
 
   @override
   State<BookingCalendarMain> createState() => _BookingCalendarMainState();
@@ -346,18 +346,79 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                   const SizedBox(
                     height: 16,
                   ),
-                  CommonButton(
-                    text: widget.bookingButtonText ?? 'BOOK',
-                    onTap: () async {
-                      controller.toggleUploading();
-                      await widget.uploadBooking(
-                          newBooking:
-                              controller.generateNewBookingForUploading());
-                      controller.toggleUploading();
-                      controller.resetSelectedSlot();
-                    },
-                    isDisabled: controller.selectedSlot == -1,
-                    buttonActiveColor: widget.bookingButtonColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: CommonButton(
+                          text: widget.bookingButtonText ?? 'BOOK',
+                          onTap: () async {
+                            controller.toggleUploading();
+                            await widget.uploadBooking(
+                                newBooking:
+                                    controller.generateNewBookingForUploading());
+                            controller.toggleUploading();
+                            controller.resetSelectedSlot();
+                          },
+                          isDisabled: controller.selectedSlot == -1,
+                          buttonActiveColor: widget.bookingButtonColor,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 15,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                  });
+                                },
+                              ),
+                              const Text('15 Dakika'),
+                              const Spacer(),
+                              Radio(
+                                value: 30,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                  });
+                                },
+                              ),
+                              const Text('30 Dakika'),
+                              const Spacer(),
+                              Radio(
+                                value: 45,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                  });
+                                },
+                              ),
+                              const Text('45 Dakika'),
+                              const Spacer(),
+                              Radio(
+                                value: 60,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                  });
+                                },
+                              ),
+                              const Text('60 Dakika'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -365,3 +426,4 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
     );
   }
 }
+
