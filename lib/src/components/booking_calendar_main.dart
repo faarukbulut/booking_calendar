@@ -347,91 +347,75 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                     height: 16,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: CommonButton(
-                          text: widget.bookingButtonText ?? 'BOOK',
-                          onTap: () async {
-                            controller.toggleUploading();
-                            await widget.uploadBooking(
-                                newBooking:
-                                    controller.generateNewBookingForUploading());
-                            controller.toggleUploading();
-                            controller.resetSelectedSlot();
-                          },
-                          isDisabled: controller.selectedSlot == -1,
-                          buttonActiveColor: widget.bookingButtonColor,
-                        ),
+                      Radio(
+                        value: 15,
+                        groupValue: widget.selectedRadio,
+                        onChanged: (val){
+                          setState(() {
+                            widget.selectedRadio = val as int;
+                          });
+                        },
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: SingleChildScrollView(
-                            child: Row(
-                              children: [
-                                Radio(
-                                  value: 15,
-                                  groupValue: widget.selectedRadio,
-                                  onChanged: (val){
-                                    setState(() {
-                                      widget.selectedRadio = val as int;
-                                    });
-                                  },
-                                ),
-                                const Text('15 Dk'),
-                                const Spacer(),
-                                Radio(
-                                  value: 30,
-                                  groupValue: widget.selectedRadio,
-                                  onChanged: (val){
-                                    setState(() {
-                                      widget.selectedRadio = val as int;
-                                    });
-                                  },
-                                ),
-                                const Text('30 Dk'),
-                                const Spacer(),
-                                Radio(
-                                  value: 45,
-                                  groupValue: widget.selectedRadio,
-                                  onChanged: (val){
-                                    setState(() {
-                                      widget.selectedRadio = val as int;
-                                    });
-                                  },
-                                ),
-                                const Text('45 Dk'),
-                                const Spacer(),
-                                Radio(
-                                  value: 60,
-                                  groupValue: widget.selectedRadio,
-                                  onChanged: (val){
-                                    setState(() {
-                                      widget.selectedRadio = val as int;
-                                    });
-                                  },
-                                ),
-                                const Text('60 Dk'),
-                                const Spacer(),
-                                Radio(
-                                  value: 0,
-                                  groupValue: widget.selectedRadio,
-                                  onChanged: (val){
-                                    setState(() {
-                                      widget.selectedRadio = val as int;
-                                    });
-                                  },
-                                ),
-                                const Text('Tüm Gün'),
-                              ],
-                            ),
-                          ),
-                        ),
+                      const Text('15 Dk'),
+                      const Spacer(),
+                      Radio(
+                        value: 30,
+                        groupValue: widget.selectedRadio,
+                        onChanged: (val){
+                          setState(() {
+                            widget.selectedRadio = val as int;
+                          });
+                        },
                       ),
+                      const Text('30 Dk'),
+                      const Spacer(),
+                      Radio(
+                        value: 45,
+                        groupValue: widget.selectedRadio,
+                        onChanged: (val){
+                          setState(() {
+                            widget.selectedRadio = val as int;
+                          });
+                        },
+                      ),
+                      const Text('45 Dk'),
+                      const Spacer(),
+                      Radio(
+                        value: 60,
+                        groupValue: widget.selectedRadio,
+                        onChanged: (val){
+                          setState(() {
+                            widget.selectedRadio = val as int;
+                          });
+                        },
+                      ),
+                      const Text('60 Dk'),
+                      const Spacer(),
+                      Radio(
+                        value: 0,
+                        groupValue: widget.selectedRadio,
+                        onChanged: (val){
+                          setState(() {
+                            widget.selectedRadio = val as int;
+                          });
+                        },
+                      ),
+                      const Text('Tüm Gün'),
                     ],
+                  ),
+                  CommonButton(
+                    text: widget.bookingButtonText ?? 'BOOK',
+                    onTap: () async {
+                      controller.toggleUploading();
+                      await widget.uploadBooking(
+                          newBooking:
+                              controller.generateNewBookingForUploading());
+                      controller.toggleUploading();
+                      controller.resetSelectedSlot();
+                    },
+                    isDisabled: controller.selectedSlot == -1,
+                    buttonActiveColor: widget.bookingButtonColor,
                   ),
                 ],
               ),
