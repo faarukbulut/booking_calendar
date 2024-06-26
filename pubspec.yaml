@@ -1,7 +1,7 @@
 name: booking_calendar
 description: Flutter package to book online through your application. Use with streams to get real-time booking data, eg with Firestore streams
 version: 1.1.10
-homepage: https://github.com/radikris/booking_calendar
+homepage: https://github.com/faarukbulut/booking_calendar
 
 environment:
   sdk: ">=2.12.0 <4.0.0"
