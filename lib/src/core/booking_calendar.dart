@@ -13,6 +13,9 @@ class BookingCalendar extends StatelessWidget {
       required this.getBookingStream,
       required this.uploadBooking,
       required this.convertStreamResultToDateTimeRanges,
+      required this.weekCustomText,
+      required this.twoWeekCustomText,
+      required this.monthCustomText,
       this.bookingExplanation,
       this.bookingGridCrossAxisCount,
       this.bookingGridChildAspectRatio,
@@ -146,6 +149,11 @@ class BookingCalendar extends StatelessWidget {
   ///Concrete List of dates when the day is unavailable, eg: holiday, everything is booked or you need to close or something.
   final List<DateTime>? disabledDates;
 
+  final String weekCustomText;
+  final String twoWeekCustomText;
+  final String monthCustomText;
+
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -155,14 +163,16 @@ class BookingCalendar extends StatelessWidget {
         key: key,
         getBookingStream: getBookingStream,
         uploadBooking: uploadBooking,
+        weekCustomText: weekCustomText,
+        twoWeekCustomText: twoWeekCustomText,
+        monthCustomText: monthCustomText,
         bookingButtonColor: bookingButtonColor,
         bookingButtonText: bookingButtonText,
         bookingExplanation: bookingExplanation,
         bookingGridChildAspectRatio: bookingGridChildAspectRatio,
         bookingGridCrossAxisCount: bookingGridCrossAxisCount,
         formatDateTime: formatDateTime,
-        convertStreamResultToDateTimeRanges:
-            convertStreamResultToDateTimeRanges,
+        convertStreamResultToDateTimeRanges: convertStreamResultToDateTimeRanges,
         bookedSlotTextStyle: bookedSlotTextStyle,
         availableSlotTextStyle: availableSlotTextStyle,
         selectedSlotTextStyle: selectedSlotTextStyle,

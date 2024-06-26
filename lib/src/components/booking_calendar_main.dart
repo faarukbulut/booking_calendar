@@ -20,6 +20,9 @@ class BookingCalendarMain extends StatefulWidget {
     required this.getBookingStream,
     required this.convertStreamResultToDateTimeRanges,
     required this.uploadBooking,
+    required this.weekCustomText,
+    required this.twoWeekCustomText,
+    required this.monthCustomText,
     this.bookingExplanation,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
@@ -92,6 +95,11 @@ class BookingCalendarMain extends StatefulWidget {
   final List<DateTime>? disabledDates;
 
   final Widget? wholeDayIsBookedWidget;
+
+  // Update Custom
+  final String weekCustomText;
+  final String twoWeekCustomText;
+  final String monthCustomText;
 
   @override
   State<BookingCalendarMain> createState() => _BookingCalendarMainState();
@@ -214,10 +222,10 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           selectNewDateRange();
                         }
                       },
-                      availableCalendarFormats: const{ // Bu düzen pakette hatalı yapılmış. Şimdilik textleri özelleştirerek hallettim.
-                        CalendarFormat.month: 'Hafta',
-                        CalendarFormat.twoWeeks: 'Ay',
-                        CalendarFormat.week: '2 Hafta',
+                      availableCalendarFormats: { // Bu düzen pakette hatalı yapılmış. Şimdilik textleri özelleştirerek hallettim.
+                        CalendarFormat.month: widget.weekCustomText,
+                        CalendarFormat.twoWeeks: widget.monthCustomText,
+                        CalendarFormat.week: widget.twoWeekCustomText,
                       },
                       onFormatChanged: (format) {
                         if (_calendarFormat != format) {
