@@ -369,52 +369,65 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Row(
-                            children: [
-                              Radio(
-                                value: 15,
-                                groupValue: widget.selectedRadio,
-                                onChanged: (val){
-                                  setState(() {
-                                    widget.selectedRadio = val as int;
-                                  });
-                                },
-                              ),
-                              const Text('15 Dakika'),
-                              const Spacer(),
-                              Radio(
-                                value: 30,
-                                groupValue: widget.selectedRadio,
-                                onChanged: (val){
-                                  setState(() {
-                                    widget.selectedRadio = val as int;
-                                  });
-                                },
-                              ),
-                              const Text('30 Dakika'),
-                              const Spacer(),
-                              Radio(
-                                value: 45,
-                                groupValue: widget.selectedRadio,
-                                onChanged: (val){
-                                  setState(() {
-                                    widget.selectedRadio = val as int;
-                                  });
-                                },
-                              ),
-                              const Text('45 Dakika'),
-                              const Spacer(),
-                              Radio(
-                                value: 60,
-                                groupValue: widget.selectedRadio,
-                                onChanged: (val){
-                                  setState(() {
-                                    widget.selectedRadio = val as int;
-                                  });
-                                },
-                              ),
-                              const Text('60 Dakika'),
-                            ],
+                          child: SingleChildScrollView(
+                            child: Row(
+                              children: [
+                                Radio(
+                                  value: 15,
+                                  groupValue: widget.selectedRadio,
+                                  onChanged: (val){
+                                    setState(() {
+                                      widget.selectedRadio = val as int;
+                                    });
+                                  },
+                                ),
+                                const Text('15 Dk'),
+                                const Spacer(),
+                                Radio(
+                                  value: 30,
+                                  groupValue: widget.selectedRadio,
+                                  onChanged: (val){
+                                    setState(() {
+                                      widget.selectedRadio = val as int;
+                                    });
+                                  },
+                                ),
+                                const Text('30 Dk'),
+                                const Spacer(),
+                                Radio(
+                                  value: 45,
+                                  groupValue: widget.selectedRadio,
+                                  onChanged: (val){
+                                    setState(() {
+                                      widget.selectedRadio = val as int;
+                                    });
+                                  },
+                                ),
+                                const Text('45 Dk'),
+                                const Spacer(),
+                                Radio(
+                                  value: 60,
+                                  groupValue: widget.selectedRadio,
+                                  onChanged: (val){
+                                    setState(() {
+                                      widget.selectedRadio = val as int;
+                                    });
+                                  },
+                                ),
+                                const Text('60 Dk'),
+                                const Spacer(),
+                                Radio(
+                                  value: 0,
+                                  groupValue: widget.selectedRadio,
+                                  onChanged: (val){
+                                    setState(() {
+                                      widget.selectedRadio = val as int;
+                                    });
+                                  },
+                                ),
+                                const Text('Tüm Gün'),
+                              ],
+                            ),
                           ),
                         ),
                       ),
