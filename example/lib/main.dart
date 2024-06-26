@@ -18,6 +18,10 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   final now = DateTime.now();
   late BookingService mockBookingService;
 
+  String weekCustomText = "Hafta";
+  String twoWeekCustomText = "2 Hafta";
+  String monthCustomText = "Ay";
+
   @override
   void initState() {
     super.initState();
@@ -95,6 +99,9 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               convertStreamResultToDateTimeRanges: convertStreamResultMock,
               getBookingStream: getBookingStreamMock,
               uploadBooking: uploadBookingMock,
+              weekCustomText: weekCustomText,
+              twoWeekCustomText: twoWeekCustomText,
+              monthCustomText: monthCustomText,
               pauseSlots: generatePauseSlots(),
               pauseSlotText: 'LUNCH',
               hideBreakTime: false,
