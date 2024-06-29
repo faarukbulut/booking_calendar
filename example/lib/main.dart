@@ -26,13 +26,12 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   @override
   void initState() {
     super.initState();
-    // DateTime.now().startOfDay
-    // DateTime.now().endOfDay
     mockBookingService = BookingService(
-        serviceName: 'Mock Service',
-        serviceDuration: 30,
-        bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
-        bookingStart: DateTime(now.year, now.month, now.day, 8, 0));
+      serviceName: 'Mock Service',
+      serviceDuration: 10,
+      bookingStart: DateTime(now.year, now.month, now.day, 1, 0),
+      bookingEnd: DateTime(now.year, now.month, now.day, 23, 10),
+    );
   }
 
   Stream<dynamic>? getBookingStreamMock(
@@ -75,13 +74,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
     return converted;
   }
 
-  List<DateTimeRange> generatePauseSlots() {
-    return [
-      DateTimeRange(
-          start: DateTime(now.year, now.month, now.day, 12, 0),
-          end: DateTime(now.year, now.month, now.day, 13, 0))
-    ];
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,15 +98,14 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               monthCustomText: monthCustomText,
               selectedRadio: selectedRadio,
               radioOnChanged: (val){},
-              pauseSlots: generatePauseSlots(),
               pauseSlotText: 'LUNCH',
               hideBreakTime: false,
               loadingWidget: const Text('Fetching data...'),
               uploadingWidget: const CircularProgressIndicator(),
               locale: 'hu_HU',
               startingDayOfWeek: StartingDayOfWeek.tuesday,
-              wholeDayIsBookedWidget:
-                  const Text('Sorry, for this day everything is booked'),
+              wholeDayIsBookedWidget: const Text('Sorry, for this day everything is booked'),
+              bookingGridCrossAxisCount: 20,
               //disabledDates: [DateTime(2023, 1, 20)],
               //disabledDays: [6, 7],
             ),

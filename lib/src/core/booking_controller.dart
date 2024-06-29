@@ -66,18 +66,17 @@ class BookingController extends ChangeNotifier {
     return isBooked;
   }
 
-  int _maxServiceFitInADay() {
-    ///if no serviceOpening and closing was provided we will calculate with 00:00-24:00
-    int openingHours = 24;
-    if (serviceOpening != null && serviceClosing != null) {
-      openingHours = DateTimeRange(start: serviceOpening!, end: serviceClosing!)
-          .duration
-          .inHours;
-    }
-
-    ///round down if not the whole service would fit in the last hours
-    return ((openingHours * 60) / bookingService.serviceDuration).floor();
+int _maxServiceFitInADay() {
+  int openingMinutes = 24 * 60;
+  if (serviceOpening != null && serviceClosing != null) {
+    openingMinutes = DateTimeRange(start: serviceOpening!, end: serviceClosing!)
+        .duration
+        .inMinutes;
   }
+
+  /// Hizmet süresi ile kaç randevunun sığacağını hesaplayın
+  return (openingMinutes / bookingService.serviceDuration).floor();
+}
 
   bool isSlotBooked(int index) {
     DateTime checkSlot = allBookingSlots.elementAt(index);
