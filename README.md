@@ -36,7 +36,6 @@ Check the Demo Example for more Information
         convertStreamResultToDateTimeRanges: convertStreamResultToDateTimeRanges,
         ///These are only customizable, optional parameters
         bookingButtonColor: bookingButtonColor,
-        bookingButtonText: bookingButtonText,
         bookingExplanation: bookingExplanation,
         bookingGridChildAspectRatio: bookingGridChildAspectRatio,
         bookingGridCrossAxisCount: bookingGridCrossAxisCount,
@@ -44,11 +43,8 @@ Check the Demo Example for more Information
         convertStreamResultToDateTimeRanges:
         convertStreamResultToDateTimeRanges,
         availableSlotColor: availableSlotColor,
-        availableSlotText: availableSlotText,
         bookedSlotColor: bookedSlotColor,
-        bookedSlotText: bookedSlotText,
         selectedSlotColor: selectedSlotColor,
-        selectedSlotText: selectedSlotText,
         gridScrollPhysics: gridScrollPhysics,
         loadingWidget: loadingWidget,
         errorWidget: errorWidget,
@@ -56,7 +52,6 @@ Check the Demo Example for more Information
         pauseSlotColor: pauseSlotColor,
         pauseSlotText: pauseSlotText,
         hideBreakTime: hideBreakTime,
-        locale: locale,
         disabledDays: disabledDays,
         startingDayOfWeek: startingDayOfWeek,
     );

@@ -21,25 +21,20 @@ class BookingCalendarMain extends StatefulWidget {
     required this.getBookingStream,
     required this.convertStreamResultToDateTimeRanges,
     required this.uploadBooking,
-    required this.weekCustomText,
-    required this.twoWeekCustomText,
-    required this.monthCustomText,
+    required this.randevuIptal,
     required this.selectedRadio,
     required this.radioOnChanged,
     this.bookingExplanation,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
     this.formatDateTime,
-    this.bookingButtonText,
     this.bookingButtonColor,
+    this.randevuIptalButtonColor,
     this.bookedSlotColor,
     this.selectedSlotColor,
     this.availableSlotColor,
-    this.bookedSlotText,
     this.bookedSlotTextStyle,
-    this.selectedSlotText,
     this.selectedSlotTextStyle,
-    this.availableSlotText,
     this.availableSlotTextStyle,
     this.gridScrollPhysics,
     this.loadingWidget,
@@ -49,7 +44,6 @@ class BookingCalendarMain extends StatefulWidget {
     this.pauseSlotColor,
     this.pauseSlotText,
     this.hideBreakTime = false,
-    this.locale,
     this.startingDayOfWeek,
     this.disabledDays,
     this.disabledDates,
@@ -58,6 +52,7 @@ class BookingCalendarMain extends StatefulWidget {
 
   final Stream<dynamic>? Function({required DateTime start, required DateTime end}) getBookingStream;
   final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
+  final Function randevuIptal;
   final List<DateTimeRange> Function({required dynamic streamResult}) convertStreamResultToDateTimeRanges;
 
   ///Customizable
@@ -65,17 +60,14 @@ class BookingCalendarMain extends StatefulWidget {
   final int? bookingGridCrossAxisCount;
   final double? bookingGridChildAspectRatio;
   final String Function(DateTime dt)? formatDateTime;
-  final String? bookingButtonText;
   final Color? bookingButtonColor;
+  final Color? randevuIptalButtonColor;
   final Color? bookedSlotColor;
   final Color? selectedSlotColor;
   final Color? availableSlotColor;
   final Color? pauseSlotColor;
 
 //Added optional TextStyle to available, booked and selected cards.
-  final String? bookedSlotText;
-  final String? selectedSlotText;
-  final String? availableSlotText;
   final String? pauseSlotText;
 
   final TextStyle? bookedSlotTextStyle;
@@ -89,7 +81,6 @@ class BookingCalendarMain extends StatefulWidget {
 
   final bool? hideBreakTime;
   final DateTime? lastDay;
-  final String? locale;
   final bc.StartingDayOfWeek? startingDayOfWeek;
   final List<int>? disabledDays;
   final List<DateTime>? disabledDates;
@@ -97,9 +88,6 @@ class BookingCalendarMain extends StatefulWidget {
   final Widget? wholeDayIsBookedWidget;
 
   // Update Custom
-  final String weekCustomText;
-  final String twoWeekCustomText;
-  final String monthCustomText;
   late int selectedRadio;
   final ValueChanged<int> radioOnChanged;
 
@@ -123,8 +111,6 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
     _selectedDay = firstDay;
     controller.selectFirstDayByHoliday(startOfDay, endOfDay);
   }
-
-  CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
 
   late DateTime _selectedDay;
   late DateTime _focusedDay;
@@ -170,287 +156,284 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: (controller.isUploading)
             ? widget.uploadingWidget ?? const BookingDialog()
-            : Column(
+            : Row(
                 children: [
-                  CommonCard(
-                    child: TableCalendar(
-                      startingDayOfWeek: widget.startingDayOfWeek?.toTC() ?? tc.StartingDayOfWeek.monday,
-                      holidayPredicate: (day) {
-                        if (widget.disabledDates == null) return false;
-
-                        bool isHoliday = false;
-                        for (var holiday in widget.disabledDates!) {
-                          if (isSameDay(day, holiday)) {
-                            isHoliday = true;
-                          }
-                        }
-                        return isHoliday;
-                      },
-                      enabledDayPredicate: (day) {
-                        if (widget.disabledDays == null &&
-                            widget.disabledDates == null) return true;
-
-                        bool isEnabled = true;
-                        if (widget.disabledDates != null) {
+                  Expanded(
+                    child: CommonCard(
+                      child: TableCalendar(
+                        headerVisible: false,
+                        startingDayOfWeek: widget.startingDayOfWeek?.toTC() ?? tc.StartingDayOfWeek.monday,
+                        holidayPredicate: (day) {
+                          if (widget.disabledDates == null) return false;
+                    
+                          bool isHoliday = false;
                           for (var holiday in widget.disabledDates!) {
                             if (isSameDay(day, holiday)) {
-                              isEnabled = false;
+                              isHoliday = true;
                             }
                           }
-                          if (!isEnabled) return false;
-                        }
-                        if (widget.disabledDays != null) {
-                          isEnabled =
-                              !widget.disabledDays!.contains(day.weekday);
-                        }
-
-                        return isEnabled;
-                      },
-                      locale: widget.locale,
-                      firstDay: calculateFirstDay(),
-                      lastDay: widget.lastDay ?? DateTime.now().add(const Duration(days: 1000)),
-                      focusedDay: _focusedDay,
-                      calendarFormat: _calendarFormat,
-                      calendarStyle: const CalendarStyle(isTodayHighlighted: true),
-                      selectedDayPredicate: (day) {
-                        return isSameDay(_selectedDay, day);
-                      },
-                      onDaySelected: (selectedDay, focusedDay) {
-                        if (!isSameDay(_selectedDay, selectedDay)) {
-                          setState(() {
-                            _selectedDay = selectedDay;
-                            _focusedDay = focusedDay;
-                          });
-                          selectNewDateRange();
-                        }
-                      },
-                      availableCalendarFormats: { // Bu düzen pakette hatalı yapılmış. Şimdilik textleri özelleştirerek hallettim.
-                        CalendarFormat.month: widget.weekCustomText,
-                        CalendarFormat.twoWeeks: widget.monthCustomText,
-                        CalendarFormat.week: widget.twoWeekCustomText,
-                      },
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      onPageChanged: (focusedDay) {
-                        _focusedDay = focusedDay;
-                      },
+                          return isHoliday;
+                        },
+                        enabledDayPredicate: (day) {
+                          if (widget.disabledDays == null &&
+                              widget.disabledDates == null) return true;
+                    
+                          bool isEnabled = true;
+                          if (widget.disabledDates != null) {
+                            for (var holiday in widget.disabledDates!) {
+                              if (isSameDay(day, holiday)) {
+                                isEnabled = false;
+                              }
+                            }
+                            if (!isEnabled) return false;
+                          }
+                          if (widget.disabledDays != null) {
+                            isEnabled =
+                                !widget.disabledDays!.contains(day.weekday);
+                          }
+                    
+                          return isEnabled;
+                        },
+                        firstDay: calculateFirstDay(),
+                        lastDay: widget.lastDay ?? DateTime.now().add(const Duration(days: 1000)),
+                        focusedDay: _focusedDay,
+                        calendarFormat: CalendarFormat.month,
+                        calendarStyle: const CalendarStyle(isTodayHighlighted: true),
+                        selectedDayPredicate: (day) {
+                          return isSameDay(_selectedDay, day);
+                        },
+                        onDaySelected: (selectedDay, focusedDay) {
+                          if (!isSameDay(_selectedDay, selectedDay)) {
+                            setState(() {
+                              _selectedDay = selectedDay;
+                              _focusedDay = focusedDay;
+                            });
+                            selectNewDateRange();
+                          }
+                        },
+                        onPageChanged: (focusedDay) {
+                          _focusedDay = focusedDay;
+                        },
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  widget.bookingExplanation ??
-                      Wrap(
-                        alignment: WrapAlignment.spaceAround,
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        direction: Axis.horizontal,
-                        children: [
-                          BookingExplanation(
-                              color: widget.availableSlotColor ??
-                                  Colors.greenAccent,
-                              text: widget.availableSlotText ?? "Available"),
-                          BookingExplanation(
-                              color: widget.selectedSlotColor ??
-                                  Colors.orangeAccent,
-                              text: widget.selectedSlotText ?? "Selected"),
-                          BookingExplanation(
-                              color: widget.bookedSlotColor ?? Colors.redAccent,
-                              text: widget.bookedSlotText ?? "Booked"),
-                          if (widget.hideBreakTime != null &&
-                              widget.hideBreakTime == false)
-                            BookingExplanation(
-                                color: widget.pauseSlotColor ?? Colors.grey,
-                                text: widget.pauseSlotText ?? "Break"),
-                        ],
-                      ),
-                  const SizedBox(height: 8),
-                  StreamBuilder<dynamic>(
-                    stream: widget.getBookingStream(
-                        start: startOfDay, end: endOfDay),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return widget.errorWidget ??
-                            Center(
-                              child: Text(snapshot.error.toString()),
-                            );
-                      }
 
-                      if (!snapshot.hasData) {
-                        return widget.loadingWidget ??
-                            const Center(child: CircularProgressIndicator());
-                      }
-
-                      ///this snapshot should be converted to List<DateTimeRange>
-                      final data = snapshot.requireData;
-                      controller.generateBookedSlots(
-                          widget.convertStreamResultToDateTimeRanges(
-                              streamResult: data));
-
-                      return Expanded(
-                        child: (widget.wholeDayIsBookedWidget != null &&
-                                controller.isWholeDayBooked())
-                            ? widget.wholeDayIsBookedWidget!
-                            : GridView.builder(
-                                physics: widget.gridScrollPhysics ??
-                                    const BouncingScrollPhysics(),
-                                itemCount: controller.allBookingSlots.length,
-                                itemBuilder: (context, index) {
-                                  TextStyle? getTextStyle() {
-                                    if (controller.isSlotBooked(index)) {
-                                      return widget.bookedSlotTextStyle;
-                                    } else if (index ==
-                                        controller.selectedSlot) {
-                                      return widget.selectedSlotTextStyle;
-                                    } else {
-                                      return widget.availableSlotTextStyle;
-                                    }
-                                  }
-
-                                  final slot = controller.allBookingSlots
-                                      .elementAt(index);
-                                  return BookingSlot(
-                                    hideBreakSlot: widget.hideBreakTime,
-                                    pauseSlotColor: widget.pauseSlotColor,
-                                    availableSlotColor:
-                                        widget.availableSlotColor,
-                                    bookedSlotColor: widget.bookedSlotColor,
-                                    selectedSlotColor: widget.selectedSlotColor,
-                                    isPauseTime:
-                                        controller.isSlotInPauseTime(slot),
-                                    isBooked: controller.isSlotBooked(index),
-                                    isSelected:
-                                        index == controller.selectedSlot,
-                                    onTap: () => controller.selectSlot(index),
-                                    child: Center(
-                                      child: Text(
-                                        widget.formatDateTime?.call(slot) ??
-                                            BookingUtil.formatDateTime(slot),
-                                        style: getTextStyle(),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount:
-                                      widget.bookingGridCrossAxisCount ?? 3,
-                                  childAspectRatio:
-                                      widget.bookingGridChildAspectRatio ?? 1.5,
-                                ),
-                              ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+                  Expanded(
+                    child: Column(
                       children: [
-                        Radio(
-                          value: 5,
-                          groupValue: widget.selectedRadio,
-                          onChanged: (val){
-                            setState(() {
-                              widget.selectedRadio = val as int;
-                              widget.radioOnChanged(val);
-                            });
+                    
+                        widget.bookingExplanation ??
+                          Wrap(
+                            alignment: WrapAlignment.spaceAround,
+                            spacing: 8.0,
+                            runSpacing: 8.0,
+                            direction: Axis.horizontal,
+                            children: [
+                              BookingExplanation(
+                                color: widget.availableSlotColor ?? Colors.greenAccent,
+                                text: "Uygun"
+                              ),
+                              BookingExplanation(
+                                color: widget.selectedSlotColor ?? Colors.orangeAccent,
+                                text: "Seçilen"
+                              ),
+                              BookingExplanation(
+                                color: widget.bookedSlotColor ?? Colors.redAccent,
+                                text: "Dolu"
+                              ),
+                              if (widget.hideBreakTime != null && widget.hideBreakTime == false)
+                                BookingExplanation(
+                                color: widget.pauseSlotColor ?? Colors.grey,
+                                text: widget.pauseSlotText ?? "Break"
+                              ),
+                            ],
+                          ),
+                           
+                        const SizedBox(height: 8),
+
+                        StreamBuilder<dynamic>(
+                          stream: widget.getBookingStream(start: startOfDay, end: endOfDay),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return widget.errorWidget ?? Center(child: Text(snapshot.error.toString()),);
+                            }
+                    
+                            if (!snapshot.hasData) {
+                              return widget.loadingWidget ?? const Center(child: CircularProgressIndicator());
+                            }
+                    
+                            ///this snapshot should be converted to List<DateTimeRange>
+                            final data = snapshot.requireData;
+                            controller.generateBookedSlots(widget.convertStreamResultToDateTimeRanges(streamResult: data));
+                    
+                            return Expanded(
+                              child: (widget.wholeDayIsBookedWidget != null && controller.isWholeDayBooked())
+                                ? widget.wholeDayIsBookedWidget!
+                                : GridView.builder(
+                                    physics: widget.gridScrollPhysics ?? const BouncingScrollPhysics(),
+                                    itemCount: controller.allBookingSlots.length,
+                                    itemBuilder: (context, index) {
+                                      TextStyle? getTextStyle() {
+                                        if (controller.isSlotBooked(index)) {
+                                          return widget.bookedSlotTextStyle;
+                                        } else if (index == controller.selectedSlot) {
+                                          return widget.selectedSlotTextStyle;
+                                        } else {
+                                          return widget.availableSlotTextStyle;
+                                        }
+                                      }
+                    
+                                      final slot = controller.allBookingSlots.elementAt(index);
+                                      return BookingSlot(
+                                          hideBreakSlot: widget.hideBreakTime,
+                                          pauseSlotColor: widget.pauseSlotColor,
+                                          availableSlotColor: widget.availableSlotColor,
+                                          bookedSlotColor: widget.bookedSlotColor,
+                                          selectedSlotColor: widget.selectedSlotColor,
+                                          isPauseTime: controller.isSlotInPauseTime(slot),
+                                          isBooked: controller.isSlotBooked(index),
+                                          isSelected: index == controller.selectedSlot,
+                                          onTap: () => controller.selectSlot(index),
+                                          child: Center(
+                                            child: Text(
+                                              widget.formatDateTime?.call(slot) ?? BookingUtil.formatDateTime(slot),
+                                              style: getTextStyle(),
+                                            ),
+                                          ),
+                                        );
+                                    },
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: widget.bookingGridCrossAxisCount ?? 3,
+                                      childAspectRatio: widget.bookingGridChildAspectRatio ?? 1.5,
+                                    ),
+                                  ),
+                            );
                           },
                         ),
-                        const Text('5 Dk'),
-                        const SizedBox(width: 10,),
-                        Radio(
-                          value: 10,
-                          groupValue: widget.selectedRadio,
-                          onChanged: (val){
-                            setState(() {
-                              widget.selectedRadio = val as int;
-                              widget.radioOnChanged(val);
-                            });
-                          },
+                        const SizedBox(height: 16),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 5,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                    widget.radioOnChanged(val);
+                                  });
+                                },
+                              ),
+                              const Text('5 Dk'),
+                              const SizedBox(width: 10,),
+                              Radio(
+                                value: 10,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                    widget.radioOnChanged(val);
+                                  });
+                                },
+                              ),
+                              const Text('10 Dk'),
+                              const SizedBox(width: 10,),
+                              Radio(
+                                value: 15,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                    widget.radioOnChanged(val);
+                                  });
+                                },
+                              ),
+                              const Text('15 Dk'),
+                              const SizedBox(width: 10,),
+                              Radio(
+                                value: 30,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                    widget.radioOnChanged(val);
+                                  });
+                                },
+                              ),
+                              const Text('30 Dk'),
+                              const SizedBox(width: 10,),
+                              Radio(
+                                value: 45,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                    widget.radioOnChanged(val);
+                                  });
+                                },
+                              ),
+                              const Text('45 Dk'),
+                              const SizedBox(width: 10,),
+                              Radio(
+                                value: 60,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                    widget.radioOnChanged(val);
+                                  });
+                                },
+                              ),
+                              const Text('60 Dk'),
+                              const SizedBox(width: 10,),
+                              Radio(
+                                value: 0,
+                                groupValue: widget.selectedRadio,
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.selectedRadio = val as int;
+                                    widget.radioOnChanged(val);
+                                  });
+                                },
+                              ),
+                              const Text('Tüm Gün'),
+                              const SizedBox(width: 10,),
+                            ],
+                          ),
                         ),
-                        const Text('10 Dk'),
-                        const SizedBox(width: 10,),
-                        Radio(
-                          value: 15,
-                          groupValue: widget.selectedRadio,
-                          onChanged: (val){
-                            setState(() {
-                              widget.selectedRadio = val as int;
-                              widget.radioOnChanged(val);
-                            });
-                          },
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CommonButton(
+                                text: 'Randevu Ata',
+                                onTap: () async {
+                                  controller.toggleUploading();
+                                  await widget.uploadBooking(newBooking: controller.generateNewBookingForUploading());
+                                  controller.toggleUploading();
+                                  controller.resetSelectedSlot();
+                                },
+                                isDisabled: controller.selectedSlot == -1,
+                                buttonActiveColor: widget.bookingButtonColor,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: CommonButton(
+                                text: 'Randevu İptal',
+                                onTap: () async {
+                                  widget.randevuIptal(true);
+                                },
+                                buttonActiveColor: widget.randevuIptalButtonColor,
+                              ),
+                            ),
+                          ],
                         ),
-                        const Text('15 Dk'),
-                        const SizedBox(width: 10,),
-                        Radio(
-                          value: 30,
-                          groupValue: widget.selectedRadio,
-                          onChanged: (val){
-                            setState(() {
-                              widget.selectedRadio = val as int;
-                              widget.radioOnChanged(val);
-                            });
-                          },
-                        ),
-                        const Text('30 Dk'),
-                        const SizedBox(width: 10,),
-                        Radio(
-                          value: 45,
-                          groupValue: widget.selectedRadio,
-                          onChanged: (val){
-                            setState(() {
-                              widget.selectedRadio = val as int;
-                              widget.radioOnChanged(val);
-                            });
-                          },
-                        ),
-                        const Text('45 Dk'),
-                        const SizedBox(width: 10,),
-                        Radio(
-                          value: 60,
-                          groupValue: widget.selectedRadio,
-                          onChanged: (val){
-                            setState(() {
-                              widget.selectedRadio = val as int;
-                              widget.radioOnChanged(val);
-                            });
-                          },
-                        ),
-                        const Text('60 Dk'),
-                        const SizedBox(width: 10,),
-                        Radio(
-                          value: 0,
-                          groupValue: widget.selectedRadio,
-                          onChanged: (val){
-                            setState(() {
-                              widget.selectedRadio = val as int;
-                              widget.radioOnChanged(val);
-                            });
-                          },
-                        ),
-                        const Text('Tüm Gün'),
-                        const SizedBox(width: 10,),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  CommonButton(
-                    text: widget.bookingButtonText ?? 'BOOK',
-                    onTap: () async {
-                      controller.toggleUploading();
-                      await widget.uploadBooking(
-                          newBooking:
-                              controller.generateNewBookingForUploading());
-                      controller.toggleUploading();
-                      controller.resetSelectedSlot();
-                    },
-                    isDisabled: controller.selectedSlot == -1,
-                    buttonActiveColor: widget.bookingButtonColor,
-                  ),
+
                 ],
               ),
       ),

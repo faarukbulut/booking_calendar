@@ -12,24 +12,19 @@ class BookingCalendar extends StatelessWidget {
       required this.bookingService,
       required this.getBookingStream,
       required this.uploadBooking,
+      required this.randevuIptal,
       required this.convertStreamResultToDateTimeRanges,
-      required this.weekCustomText,
-      required this.twoWeekCustomText,
-      required this.monthCustomText,
       required this.selectedRadio,
       required this.radioOnChanged,
       this.bookingExplanation,
       this.bookingGridCrossAxisCount,
       this.bookingGridChildAspectRatio,
       this.formatDateTime,
-      this.bookingButtonText,
       this.bookingButtonColor,
+      this.randevuIptalButtonColor,
       this.bookedSlotColor,
       this.selectedSlotColor,
       this.availableSlotColor,
-      this.bookedSlotText,
-      this.selectedSlotText,
-      this.availableSlotText,
       this.availableSlotTextStyle,
       this.selectedSlotTextStyle,
       this.bookedSlotTextStyle,
@@ -42,7 +37,6 @@ class BookingCalendar extends StatelessWidget {
       this.pauseSlotText,
       this.pauseSlots,
       this.hideBreakTime,
-      this.locale,
       this.startingDayOfWeek = StartingDayOfWeek.monday,
       this.disabledDays,
       this.disabledDates,
@@ -76,8 +70,9 @@ class BookingCalendar extends StatelessWidget {
   /// and the updated [BookingService] will be passed to the parameters and you can use this
   /// in your HTTP function to upload the data to the database ([BookingService] implements JSON serializable)
 
-  final Future<dynamic> Function({required BookingService newBooking})
-      uploadBooking;
+  final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
+
+  final Function randevuIptal;
 
   ///this will be display above the Booking Slots, which can be used to give the user
   ///extra informations of the booking calendar (like Colors: default)
@@ -93,11 +88,9 @@ class BookingCalendar extends StatelessWidget {
   ///and you can format with the help of this parameter
   final String Function(DateTime dt)? formatDateTime;
 
-  ///The text on the booking button
-  final String? bookingButtonText;
-
   ///The color of the booking button
   final Color? bookingButtonColor;
+  final Color? randevuIptalButtonColor;
 
   ///The [Color] and the [Text] of the
   ///already booked, currently selected, yet available slot (or slot for the break time)
@@ -105,9 +98,6 @@ class BookingCalendar extends StatelessWidget {
   final Color? selectedSlotColor;
   final Color? availableSlotColor;
   final Color? pauseSlotColor;
-  final String? bookedSlotText;
-  final String? selectedSlotText;
-  final String? availableSlotText;
   final String? pauseSlotText;
   final TextStyle? bookedSlotTextStyle;
   final TextStyle? availableSlotTextStyle;
@@ -135,9 +125,6 @@ class BookingCalendar extends StatelessWidget {
   ///True if you want to hide your break time from the calendar, and the explanation text as well
   final bool? hideBreakTime;
 
-  ///for localizing the calendar, String code to locale property. (intl format) See: [https://pub.dev/packages/table_calendar#locale]
-  final String? locale;
-
   ///What is the default starting day of the week in the tablecalendar. See [https://pub.dev/documentation/table_calendar/latest/table_calendar/StartingDayOfWeek.html]
   final StartingDayOfWeek? startingDayOfWeek;
 
@@ -151,9 +138,6 @@ class BookingCalendar extends StatelessWidget {
   ///Concrete List of dates when the day is unavailable, eg: holiday, everything is booked or you need to close or something.
   final List<DateTime>? disabledDates;
 
-  final String weekCustomText;
-  final String twoWeekCustomText;
-  final String monthCustomText;
   final int selectedRadio;
   final ValueChanged<int> radioOnChanged;
 
@@ -167,13 +151,11 @@ class BookingCalendar extends StatelessWidget {
         key: key,
         getBookingStream: getBookingStream,
         uploadBooking: uploadBooking,
-        weekCustomText: weekCustomText,
-        twoWeekCustomText: twoWeekCustomText,
-        monthCustomText: monthCustomText,
+        randevuIptal: randevuIptal,
         selectedRadio: selectedRadio,
         radioOnChanged: radioOnChanged,
         bookingButtonColor: bookingButtonColor,
-        bookingButtonText: bookingButtonText,
+        randevuIptalButtonColor: randevuIptalButtonColor,
         bookingExplanation: bookingExplanation,
         bookingGridChildAspectRatio: bookingGridChildAspectRatio,
         bookingGridCrossAxisCount: bookingGridCrossAxisCount,
@@ -183,11 +165,8 @@ class BookingCalendar extends StatelessWidget {
         availableSlotTextStyle: availableSlotTextStyle,
         selectedSlotTextStyle: selectedSlotTextStyle,
         availableSlotColor: availableSlotColor,
-        availableSlotText: availableSlotText,
         bookedSlotColor: bookedSlotColor,
-        bookedSlotText: bookedSlotText,
         selectedSlotColor: selectedSlotColor,
-        selectedSlotText: selectedSlotText,
         gridScrollPhysics: gridScrollPhysics,
         loadingWidget: loadingWidget,
         errorWidget: errorWidget,
@@ -196,7 +175,6 @@ class BookingCalendar extends StatelessWidget {
         pauseSlotColor: pauseSlotColor,
         pauseSlotText: pauseSlotText,
         hideBreakTime: hideBreakTime,
-        locale: locale,
         startingDayOfWeek: startingDayOfWeek,
         disabledDays: disabledDays,
         lastDay: lastDay,

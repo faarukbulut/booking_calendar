@@ -18,9 +18,6 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   final now = DateTime.now();
   late BookingService mockBookingService;
 
-  String weekCustomText = "Hafta";
-  String twoWeekCustomText = "2 Hafta";
-  String monthCustomText = "Ay";
   int selectedRadio = 5;
 
   @override
@@ -93,19 +90,17 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               convertStreamResultToDateTimeRanges: convertStreamResultMock,
               getBookingStream: getBookingStreamMock,
               uploadBooking: uploadBookingMock,
-              weekCustomText: weekCustomText,
-              twoWeekCustomText: twoWeekCustomText,
-              monthCustomText: monthCustomText,
+              randevuIptal: (val){},
               selectedRadio: selectedRadio,
               radioOnChanged: (val){},
               pauseSlotText: 'LUNCH',
               hideBreakTime: false,
               loadingWidget: const Text('Fetching data...'),
               uploadingWidget: const CircularProgressIndicator(),
-              locale: 'hu_HU',
               startingDayOfWeek: StartingDayOfWeek.tuesday,
               wholeDayIsBookedWidget: const Text('Sorry, for this day everything is booked'),
-              bookingGridCrossAxisCount: 20,
+              bookingGridCrossAxisCount: 4,
+              randevuIptalButtonColor: Colors.red,
               //disabledDates: [DateTime(2023, 1, 20)],
               //disabledDays: [6, 7],
             ),
