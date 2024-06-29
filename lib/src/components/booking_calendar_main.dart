@@ -5,7 +5,6 @@ import 'package:table_calendar/table_calendar.dart' as tc
     show StartingDayOfWeek;
 
 import '../core/booking_controller.dart';
-import '../model/booking_service.dart';
 import '../model/enums.dart' as bc;
 import '../util/booking_util.dart';
 import 'booking_dialog.dart';
@@ -19,7 +18,6 @@ class BookingCalendarMain extends StatefulWidget {
     Key? key,
     required this.getBookingStream,
     required this.convertStreamResultToDateTimeRanges,
-    required this.uploadBooking,
     required this.randevuIptal,
     required this.randevuGuncelle,
     required this.selectedRadio,
@@ -50,7 +48,6 @@ class BookingCalendarMain extends StatefulWidget {
   }) : super(key: key);
 
   final Stream<dynamic>? Function({required DateTime start, required DateTime end}) getBookingStream;
-  final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
   final Function randevuIptal;
   final Function randevuGuncelle;
   final List<DateTimeRange> Function({required dynamic streamResult}) convertStreamResultToDateTimeRanges;
@@ -378,11 +375,6 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               child: CommonButton(
                                 text: 'Randevu Ata',
                                 onTap: () async {
-                                  // controller.toggleUploading();
-                                  // await widget.uploadBooking(newBooking: controller.generateNewBookingForUploading());
-                                  // controller.toggleUploading();
-                                  // controller.resetSelectedSlot(controller.generateNewBookingForUploading());
-
                                   widget.randevuGuncelle(controller.generateNewBookingForUploading());
                                 },
                                 isDisabled: controller.selectedSlot == -1,

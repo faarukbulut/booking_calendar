@@ -32,7 +32,6 @@ Check the Demo Example for more Information
         key: key,
         ///These are the required parameters
         getBookingStream: getBookingStream,
-        uploadBooking: uploadBooking,
         convertStreamResultToDateTimeRanges: convertStreamResultToDateTimeRanges,
         ///These are only customizable, optional parameters
         bookingButtonColor: bookingButtonColor,
@@ -173,7 +172,6 @@ BookingCalendar(
     bookingService: mockBookingService,
     convertStreamResultToDateTimeRanges: convertStreamResultFirebase,
     getBookingStream: getBookingStreamFirebase,
-    uploadBooking: uploadBookingFirebase,
     uploadingWidget: const CircularProgressIndicator(),
     //... other customisation properties
 ),

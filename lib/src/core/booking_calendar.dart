@@ -11,7 +11,6 @@ class BookingCalendar extends StatelessWidget {
       {Key? key,
       required this.bookingService,
       required this.getBookingStream,
-      required this.uploadBooking,
       required this.randevuIptal,
       required this.randevuGuncelle,
       required this.convertStreamResultToDateTimeRanges,
@@ -69,8 +68,6 @@ class BookingCalendar extends StatelessWidget {
   ///when the user taps the booking button we will call this callback function
   /// and the updated [BookingService] will be passed to the parameters and you can use this
   /// in your HTTP function to upload the data to the database ([BookingService] implements JSON serializable)
-
-  final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
 
   final Function randevuIptal;
   final Function randevuGuncelle;
@@ -147,7 +144,6 @@ class BookingCalendar extends StatelessWidget {
       child: BookingCalendarMain(
         key: key,
         getBookingStream: getBookingStream,
-        uploadBooking: uploadBooking,
         randevuIptal: randevuIptal,
         randevuGuncelle: randevuGuncelle,
         selectedRadio: selectedRadio,

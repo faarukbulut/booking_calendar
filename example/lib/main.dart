@@ -36,14 +36,6 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
     return Stream.value([]);
   }
 
-  Future<dynamic> uploadBookingMock(
-      {required BookingService newBooking}) async {
-    await Future.delayed(const Duration(seconds: 1));
-    converted.add(DateTimeRange(
-        start: newBooking.bookingStart, end: newBooking.bookingEnd));
-    print('${newBooking.toJson()} has been uploaded');
-  }
-
   List<DateTimeRange> converted = [];
 
   List<DateTimeRange> convertStreamResultMock({required dynamic streamResult}) {
@@ -97,7 +89,6 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               bookingService: mockBookingService,
               convertStreamResultToDateTimeRanges: convertStreamResultMock,
               getBookingStream: getBookingStreamMock,
-              uploadBooking: uploadBookingMock,
               randevuGuncelle: (val){guncelleRandevu(val);},
               randevuIptal: iptalRandevu,
               selectedRadio: selectedRadio,
