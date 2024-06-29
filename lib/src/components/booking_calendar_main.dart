@@ -390,7 +390,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               child: CommonButton(
                                 text: 'Randevu İptal',
                                 onTap: () async {
-                                  widget.randevuIptal(true);
+                                  widget.randevuIptal();
                                 },
                                 buttonActiveColor: widget.randevuIptalButtonColor,
                               ),

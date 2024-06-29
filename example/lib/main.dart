@@ -92,7 +92,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               convertStreamResultToDateTimeRanges: convertStreamResultMock,
               getBookingStream: getBookingStreamMock,
               uploadBooking: uploadBookingMock,
-              randevuIptal: (val){},
+              randevuIptal: (){ print('clicked'); },
               selectedRadio: selectedRadio,
               radioOnChanged: (val){},
               pauseSlotText: 'LUNCH',
