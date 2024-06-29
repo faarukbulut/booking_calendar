@@ -347,6 +347,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                   ),
                   const SizedBox(height: 16),
                   SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
                         Radio(
@@ -360,7 +361,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           },
                         ),
                         const Text('5 Dk'),
-                        const Spacer(),
+                        const SizedBox(width: 10,),
                         Radio(
                           value: 10,
                           groupValue: widget.selectedRadio,
@@ -372,7 +373,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           },
                         ),
                         const Text('10 Dk'),
-                        const Spacer(),
+                        const SizedBox(width: 10,),
                         Radio(
                           value: 15,
                           groupValue: widget.selectedRadio,
@@ -384,7 +385,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           },
                         ),
                         const Text('15 Dk'),
-                        const Spacer(),
+                        const SizedBox(width: 10,),
                         Radio(
                           value: 30,
                           groupValue: widget.selectedRadio,
@@ -396,7 +397,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           },
                         ),
                         const Text('30 Dk'),
-                        const Spacer(),
+                        const SizedBox(width: 10,),
                         Radio(
                           value: 45,
                           groupValue: widget.selectedRadio,
@@ -408,7 +409,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           },
                         ),
                         const Text('45 Dk'),
-                        const Spacer(),
+                        const SizedBox(width: 10,),
                         Radio(
                           value: 60,
                           groupValue: widget.selectedRadio,
@@ -420,7 +421,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           },
                         ),
                         const Text('60 Dk'),
-                        const Spacer(),
+                        const SizedBox(width: 10,),
                         Radio(
                           value: 0,
                           groupValue: widget.selectedRadio,
@@ -432,6 +433,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           },
                         ),
                         const Text('Tüm Gün'),
+                        const SizedBox(width: 10,),
                       ],
                     ),
                   ),
