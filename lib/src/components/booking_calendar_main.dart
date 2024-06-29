@@ -159,7 +159,6 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                     child: CommonCard(
                       child: TableCalendar(
                         locale: 'tr_TR',
-                        headerVisible: false,
                         startingDayOfWeek: widget.startingDayOfWeek?.toTC() ?? tc.StartingDayOfWeek.monday,
                         holidayPredicate: (day) {
                           if (widget.disabledDates == null) return false;
@@ -173,8 +172,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           return isHoliday;
                         },
                         enabledDayPredicate: (day) {
-                          if (widget.disabledDays == null &&
-                              widget.disabledDates == null) return true;
+                          if (widget.disabledDays == null && widget.disabledDates == null) return true;
                     
                           bool isEnabled = true;
                           if (widget.disabledDates != null) {
@@ -212,6 +210,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                         onPageChanged: (focusedDay) {
                           _focusedDay = focusedDay;
                         },
+                        availableCalendarFormats: const {CalendarFormat.month: "Ay"},
                       ),
                     ),
                   ),
@@ -294,7 +293,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('5'),
+                              const Text('5 Dk'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 10,
@@ -306,7 +305,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('10'),
+                              const Text('10 Dk'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 15,
@@ -318,7 +317,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('15'),
+                              const Text('15 Dk'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 30,
@@ -330,7 +329,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('30'),
+                              const Text('30 Dk'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 45,
@@ -342,7 +341,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('45'),
+                              const Text('45 Dk'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 60,
@@ -354,7 +353,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('60'),
+                              const Text('60 Dk'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 0,
@@ -367,7 +366,6 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                 },
                               ),
                               const Text('Tüm Gün'),
-                              const SizedBox(width: 10,),
                             ],
                           ),
                         ),
