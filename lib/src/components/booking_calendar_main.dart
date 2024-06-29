@@ -9,7 +9,6 @@ import '../model/booking_service.dart';
 import '../model/enums.dart' as bc;
 import '../util/booking_util.dart';
 import 'booking_dialog.dart';
-import 'booking_explanation.dart';
 import 'booking_slot.dart';
 import 'common_button.dart';
 import 'common_card.dart';
@@ -24,7 +23,6 @@ class BookingCalendarMain extends StatefulWidget {
     required this.randevuIptal,
     required this.selectedRadio,
     required this.radioOnChanged,
-    this.bookingExplanation,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
     this.formatDateTime,
@@ -56,7 +54,6 @@ class BookingCalendarMain extends StatefulWidget {
   final List<DateTimeRange> Function({required dynamic streamResult}) convertStreamResultToDateTimeRanges;
 
   ///Customizable
-  final Widget? bookingExplanation;
   final int? bookingGridCrossAxisCount;
   final double? bookingGridChildAspectRatio;
   final String Function(DateTime dt)? formatDateTime;
@@ -161,6 +158,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                   Expanded(
                     child: CommonCard(
                       child: TableCalendar(
+                        locale: 'tr_TR',
                         headerVisible: false,
                         startingDayOfWeek: widget.startingDayOfWeek?.toTC() ?? tc.StartingDayOfWeek.monday,
                         holidayPredicate: (day) {
@@ -221,35 +219,6 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                   Expanded(
                     child: Column(
                       children: [
-                    
-                        widget.bookingExplanation ??
-                          Wrap(
-                            alignment: WrapAlignment.spaceAround,
-                            spacing: 8.0,
-                            runSpacing: 8.0,
-                            direction: Axis.horizontal,
-                            children: [
-                              BookingExplanation(
-                                color: widget.availableSlotColor ?? Colors.greenAccent,
-                                text: "Uygun"
-                              ),
-                              BookingExplanation(
-                                color: widget.selectedSlotColor ?? Colors.orangeAccent,
-                                text: "Seçilen"
-                              ),
-                              BookingExplanation(
-                                color: widget.bookedSlotColor ?? Colors.redAccent,
-                                text: "Dolu"
-                              ),
-                              if (widget.hideBreakTime != null && widget.hideBreakTime == false)
-                                BookingExplanation(
-                                color: widget.pauseSlotColor ?? Colors.grey,
-                                text: widget.pauseSlotText ?? "Break"
-                              ),
-                            ],
-                          ),
-                           
-                        const SizedBox(height: 8),
 
                         StreamBuilder<dynamic>(
                           stream: widget.getBookingStream(start: startOfDay, end: endOfDay),
@@ -325,7 +294,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('5 Dk'),
+                              const Text('5'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 10,
@@ -337,7 +306,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('10 Dk'),
+                              const Text('10'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 15,
@@ -349,7 +318,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('15 Dk'),
+                              const Text('15'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 30,
@@ -361,7 +330,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('30 Dk'),
+                              const Text('30'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 45,
@@ -373,7 +342,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('45 Dk'),
+                              const Text('45'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 60,
@@ -385,7 +354,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                   });
                                 },
                               ),
-                              const Text('60 Dk'),
+                              const Text('60'),
                               const SizedBox(width: 10,),
                               Radio(
                                 value: 0,

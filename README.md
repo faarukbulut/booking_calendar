@@ -36,7 +36,6 @@ Check the Demo Example for more Information
         convertStreamResultToDateTimeRanges: convertStreamResultToDateTimeRanges,
         ///These are only customizable, optional parameters
         bookingButtonColor: bookingButtonColor,
-        bookingExplanation: bookingExplanation,
         bookingGridChildAspectRatio: bookingGridChildAspectRatio,
         bookingGridCrossAxisCount: bookingGridCrossAxisCount,
         formatDateTime: formatDateTime,

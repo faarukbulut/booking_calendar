@@ -16,7 +16,6 @@ class BookingCalendar extends StatelessWidget {
       required this.convertStreamResultToDateTimeRanges,
       required this.selectedRadio,
       required this.radioOnChanged,
-      this.bookingExplanation,
       this.bookingGridCrossAxisCount,
       this.bookingGridChildAspectRatio,
       this.formatDateTime,
@@ -73,10 +72,6 @@ class BookingCalendar extends StatelessWidget {
   final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
 
   final Function randevuIptal;
-
-  ///this will be display above the Booking Slots, which can be used to give the user
-  ///extra informations of the booking calendar (like Colors: default)
-  final Widget? bookingExplanation;
 
   ///For the Booking Calendar Grid System, how many columns should be in the [GridView]
   final int? bookingGridCrossAxisCount;
@@ -156,7 +151,6 @@ class BookingCalendar extends StatelessWidget {
         radioOnChanged: radioOnChanged,
         bookingButtonColor: bookingButtonColor,
         randevuIptalButtonColor: randevuIptalButtonColor,
-        bookingExplanation: bookingExplanation,
         bookingGridChildAspectRatio: bookingGridChildAspectRatio,
         bookingGridCrossAxisCount: bookingGridCrossAxisCount,
         formatDateTime: formatDateTime,
