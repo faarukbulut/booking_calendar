@@ -21,6 +21,7 @@ class BookingCalendarMain extends StatefulWidget {
     required this.convertStreamResultToDateTimeRanges,
     required this.uploadBooking,
     required this.randevuIptal,
+    required this.randevuGuncelle,
     required this.selectedRadio,
     required this.radioOnChanged,
     this.bookingGridCrossAxisCount,
@@ -51,6 +52,7 @@ class BookingCalendarMain extends StatefulWidget {
   final Stream<dynamic>? Function({required DateTime start, required DateTime end}) getBookingStream;
   final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
   final Function randevuIptal;
+  final Function randevuGuncelle;
   final List<DateTimeRange> Function({required dynamic streamResult}) convertStreamResultToDateTimeRanges;
 
   ///Customizable
@@ -376,10 +378,12 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               child: CommonButton(
                                 text: 'Randevu Ata',
                                 onTap: () async {
-                                  controller.toggleUploading();
-                                  await widget.uploadBooking(newBooking: controller.generateNewBookingForUploading());
-                                  controller.toggleUploading();
-                                  controller.resetSelectedSlot();
+                                  // controller.toggleUploading();
+                                  // await widget.uploadBooking(newBooking: controller.generateNewBookingForUploading());
+                                  // controller.toggleUploading();
+                                  // controller.resetSelectedSlot(controller.generateNewBookingForUploading());
+
+                                  widget.randevuGuncelle(controller.generateNewBookingForUploading());
                                 },
                                 isDisabled: controller.selectedSlot == -1,
                                 buttonActiveColor: widget.bookingButtonColor,

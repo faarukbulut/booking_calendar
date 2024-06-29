@@ -71,7 +71,13 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
     return converted;
   }
 
+  iptalRandevu(){
+    print('iptal clicked');
+  }
 
+  guncelleRandevu(dynamic value){
+    print('guncelle clicked : ${value.bookingStart}, $selectedRadio');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +98,8 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               convertStreamResultToDateTimeRanges: convertStreamResultMock,
               getBookingStream: getBookingStreamMock,
               uploadBooking: uploadBookingMock,
-              randevuIptal: (){ print('clicked'); },
+              randevuGuncelle: (val){guncelleRandevu(val);},
+              randevuIptal: iptalRandevu,
               selectedRadio: selectedRadio,
               radioOnChanged: (val){},
               pauseSlotText: 'LUNCH',

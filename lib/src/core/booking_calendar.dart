@@ -13,6 +13,7 @@ class BookingCalendar extends StatelessWidget {
       required this.getBookingStream,
       required this.uploadBooking,
       required this.randevuIptal,
+      required this.randevuGuncelle,
       required this.convertStreamResultToDateTimeRanges,
       required this.selectedRadio,
       required this.radioOnChanged,
@@ -72,6 +73,7 @@ class BookingCalendar extends StatelessWidget {
   final Future<dynamic> Function({required BookingService newBooking}) uploadBooking;
 
   final Function randevuIptal;
+  final Function randevuGuncelle;
 
   ///For the Booking Calendar Grid System, how many columns should be in the [GridView]
   final int? bookingGridCrossAxisCount;
@@ -147,6 +149,7 @@ class BookingCalendar extends StatelessWidget {
         getBookingStream: getBookingStream,
         uploadBooking: uploadBooking,
         randevuIptal: randevuIptal,
+        randevuGuncelle: randevuGuncelle,
         selectedRadio: selectedRadio,
         radioOnChanged: radioOnChanged,
         bookingButtonColor: bookingButtonColor,
