@@ -84,7 +84,9 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
           appBar: AppBar(
             title: const Text('Booking Calendar Demo'),
           ),
-          body: Center(
+          body: SizedBox(
+            width: 1135,
+            height: MediaQuery.of(context).size.height / 1.8,
             child: BookingCalendar(
               bookingService: mockBookingService,
               convertStreamResultToDateTimeRanges: convertStreamResultMock,
@@ -99,10 +101,8 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               uploadingWidget: const CircularProgressIndicator(),
               startingDayOfWeek: StartingDayOfWeek.tuesday,
               wholeDayIsBookedWidget: const Text('Sorry, for this day everything is booked'),
-              bookingGridCrossAxisCount: 4,
+              bookingGridCrossAxisCount: 6,
               randevuIptalButtonColor: Colors.red,
-              //disabledDates: [DateTime(2023, 1, 20)],
-              //disabledDays: [6, 7],
             ),
           ),
         ));
