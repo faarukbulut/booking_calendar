@@ -21,7 +21,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   String weekCustomText = "Hafta";
   String twoWeekCustomText = "2 Hafta";
   String monthCustomText = "Ay";
-  int selectedRadio = 15;
+  int selectedRadio = 5;
 
   @override
   void initState() {
