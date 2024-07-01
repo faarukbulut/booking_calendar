@@ -27,9 +27,6 @@ class BookingCalendarMain extends StatefulWidget {
     this.formatDateTime,
     this.bookingButtonColor,
     this.randevuIptalButtonColor,
-    this.bookedSlotColor,
-    this.selectedSlotColor,
-    this.availableSlotColor,
     this.bookedSlotTextStyle,
     this.selectedSlotTextStyle,
     this.availableSlotTextStyle,
@@ -38,7 +35,6 @@ class BookingCalendarMain extends StatefulWidget {
     this.errorWidget,
     this.uploadingWidget,
     this.wholeDayIsBookedWidget,
-    this.pauseSlotColor,
     this.pauseSlotText,
     this.hideBreakTime = false,
     this.startingDayOfWeek,
@@ -58,10 +54,6 @@ class BookingCalendarMain extends StatefulWidget {
   final String Function(DateTime dt)? formatDateTime;
   final Color? bookingButtonColor;
   final Color? randevuIptalButtonColor;
-  final Color? bookedSlotColor;
-  final Color? selectedSlotColor;
-  final Color? availableSlotColor;
-  final Color? pauseSlotColor;
 
 //Added optional TextStyle to available, booked and selected cards.
   final String? pauseSlotText;
@@ -253,14 +245,11 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                       final slot = controller.allBookingSlots.elementAt(index);
                                       return BookingSlot(
                                           hideBreakSlot: widget.hideBreakTime,
-                                          pauseSlotColor: widget.pauseSlotColor,
-                                          availableSlotColor: widget.availableSlotColor,
-                                          bookedSlotColor: widget.bookedSlotColor,
-                                          selectedSlotColor: widget.selectedSlotColor,
                                           isPauseTime: controller.isSlotInPauseTime(slot),
                                           isBooked: controller.isSlotBooked(index),
                                           isSelected: index == controller.selectedSlot,
                                           onTap: () => controller.selectSlot(index),
+                                          slotDate: slot,
                                           child: Center(
                                             child: Text(
                                               widget.formatDateTime?.call(slot) ?? BookingUtil.formatDateTime(slot),

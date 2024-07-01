@@ -21,9 +21,6 @@ class BookingCalendar extends StatelessWidget {
       this.formatDateTime,
       this.bookingButtonColor,
       this.randevuIptalButtonColor,
-      this.bookedSlotColor,
-      this.selectedSlotColor,
-      this.availableSlotColor,
       this.availableSlotTextStyle,
       this.selectedSlotTextStyle,
       this.bookedSlotTextStyle,
@@ -32,7 +29,6 @@ class BookingCalendar extends StatelessWidget {
       this.errorWidget,
       this.uploadingWidget,
       this.wholeDayIsBookedWidget,
-      this.pauseSlotColor,
       this.pauseSlotText,
       this.pauseSlots,
       this.hideBreakTime,
@@ -88,10 +84,6 @@ class BookingCalendar extends StatelessWidget {
 
   ///The [Color] and the [Text] of the
   ///already booked, currently selected, yet available slot (or slot for the break time)
-  final Color? bookedSlotColor;
-  final Color? selectedSlotColor;
-  final Color? availableSlotColor;
-  final Color? pauseSlotColor;
   final String? pauseSlotText;
   final TextStyle? bookedSlotTextStyle;
   final TextStyle? availableSlotTextStyle;
@@ -157,15 +149,11 @@ class BookingCalendar extends StatelessWidget {
         bookedSlotTextStyle: bookedSlotTextStyle,
         availableSlotTextStyle: availableSlotTextStyle,
         selectedSlotTextStyle: selectedSlotTextStyle,
-        availableSlotColor: availableSlotColor,
-        bookedSlotColor: bookedSlotColor,
-        selectedSlotColor: selectedSlotColor,
         gridScrollPhysics: gridScrollPhysics,
         loadingWidget: loadingWidget,
         errorWidget: errorWidget,
         uploadingWidget: uploadingWidget,
         wholeDayIsBookedWidget: wholeDayIsBookedWidget,
-        pauseSlotColor: pauseSlotColor,
         pauseSlotText: pauseSlotText,
         hideBreakTime: hideBreakTime,
         startingDayOfWeek: startingDayOfWeek,

@@ -9,11 +9,8 @@ class BookingSlot extends StatelessWidget {
     required this.onTap,
     required this.isSelected,
     required this.isPauseTime,
-    this.bookedSlotColor,
-    this.selectedSlotColor,
-    this.availableSlotColor,
-    this.pauseSlotColor,
     this.hideBreakSlot,
+    required this.slotDate,
   }) : super(key: key);
 
   final Widget child;
@@ -21,23 +18,26 @@ class BookingSlot extends StatelessWidget {
   final bool isPauseTime;
   final bool isSelected;
   final VoidCallback onTap;
-  final Color? bookedSlotColor;
-  final Color? selectedSlotColor;
-  final Color? availableSlotColor;
-  final Color? pauseSlotColor;
   final bool? hideBreakSlot;
+  final DateTime slotDate;
 
   Color getSlotColor() {
     if (isPauseTime) {
-      return pauseSlotColor ?? Colors.grey;
+      return Colors.grey;
     }
-
     if (isBooked) {
-      return bookedSlotColor ?? Colors.redAccent;
-    } else {
-      return isSelected
-          ? selectedSlotColor ?? Colors.orangeAccent
-          : availableSlotColor ?? Colors.greenAccent;
+      return Colors.red;
+    } 
+    if(isSelected){
+      return Colors.indigo;
+    }
+    else{
+      if(slotDate.minute == 0 || slotDate.minute == 30){
+        return Colors.green; // Tam saatler yeşil.
+      }
+      else{
+        return Colors.green.shade300;
+      }
     }
   }
 
