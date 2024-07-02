@@ -16,6 +16,7 @@ class BookingCalendar extends StatelessWidget {
       required this.convertStreamResultToDateTimeRanges,
       required this.selectedRadio,
       required this.radioOnChanged,
+      required this.uyelerList,
       this.bookingGridCrossAxisCount,
       this.bookingGridChildAspectRatio,
       this.formatDateTime,
@@ -126,6 +127,7 @@ class BookingCalendar extends StatelessWidget {
 
   final int selectedRadio;
   final ValueChanged<int> radioOnChanged;
+  final List uyelerList;
 
 
   @override
@@ -140,6 +142,7 @@ class BookingCalendar extends StatelessWidget {
         randevuGuncelle: randevuGuncelle,
         selectedRadio: selectedRadio,
         radioOnChanged: radioOnChanged,
+        uyelerList: uyelerList,
         bookingButtonColor: bookingButtonColor,
         randevuIptalButtonColor: randevuIptalButtonColor,
         bookingGridChildAspectRatio: bookingGridChildAspectRatio,

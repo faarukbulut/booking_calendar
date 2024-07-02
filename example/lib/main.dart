@@ -64,13 +64,18 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   }
 
   iptalRandevu(){
-    print('iptal clicked');
+    // print('iptal clicked');
   }
 
   guncelleRandevu(dynamic value){
-    print('guncelle clicked : ${value.bookingStart}, $selectedRadio');
+    // print('guncelle clicked : ${value.bookingStart}, $selectedRadio');
   }
 
+  List<Map<String, dynamic>> uyelerList = [
+    {'id': 1, 'adi': 'faruk'},
+    {'id': 2, 'adi': 'kaan'},
+  ];
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -79,9 +84,6 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
           primarySwatch: Colors.blue,
         ),
         home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Booking Calendar Demo'),
-          ),
           body: SizedBox(
             width: 1135,
             height: MediaQuery.of(context).size.height / 1.8,
@@ -101,6 +103,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               wholeDayIsBookedWidget: const Text('Sorry, for this day everything is booked'),
               bookingGridCrossAxisCount: 6,
               randevuIptalButtonColor: Colors.red,
+              uyelerList: uyelerList,
             ),
           ),
         ));

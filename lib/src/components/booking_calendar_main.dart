@@ -1,8 +1,9 @@
+import 'package:booking_calendar/src/components/common_modal.dart';
+import 'package:booking_calendar/src/components/common_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:table_calendar/table_calendar.dart' as tc
-    show StartingDayOfWeek;
+import 'package:table_calendar/table_calendar.dart' as tc show StartingDayOfWeek;
 
 import '../core/booking_controller.dart';
 import '../model/enums.dart' as bc;
@@ -22,6 +23,7 @@ class BookingCalendarMain extends StatefulWidget {
     required this.randevuGuncelle,
     required this.selectedRadio,
     required this.radioOnChanged,
+    required this.uyelerList,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
     this.formatDateTime,
@@ -78,6 +80,7 @@ class BookingCalendarMain extends StatefulWidget {
   // Update Custom
   late int selectedRadio;
   final ValueChanged<int> radioOnChanged;
+  final List uyelerList;
 
   @override
   State<BookingCalendarMain> createState() => _BookingCalendarMainState();
@@ -86,6 +89,8 @@ class BookingCalendarMain extends StatefulWidget {
 class _BookingCalendarMainState extends State<BookingCalendarMain> {
   late BookingController controller;
   final now = DateTime.now();
+  List selectedUyelerValues = [];
+  String uyeler = "";
 
   @override
   void initState() {
@@ -133,6 +138,47 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
       }
     }
     return -1;
+  }
+
+  void openSelectUyelerDialog() {
+    CommonModal.buildMultiSelectDialogField(
+      context: context,
+      label: "Randevu Üyeleri",
+      itemList: widget.uyelerList,
+      multipleSelectedValues: selectedUyelerValues,
+      onMultipleItemsChange: (item) {
+        setState(() {
+          uyeler = "";
+          selectedUyelerValues = item;
+          item.map((e) => {uyeler = '$uyeler, ${e['adi']}'}).toList();
+          uyeler = uyeler.substring(1);
+        });
+
+        print(selectedUyelerValues.length);
+        print(uyeler);
+      },
+      itemBuilder: (BuildContext context, item, bool isSelected) {
+        return Container(
+          decoration: !isSelected
+              ? null
+              : BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                ),
+          child: ListTile(
+            trailing: isSelected ? const Icon(Icons.check) : null,
+            selected: isSelected,
+            title: Text(
+              item['adi'],
+              style: TextStyle(
+                fontSize: 18,
+                color: isSelected ? Colors.indigo : Colors.black87,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -206,9 +252,25 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                     ),
                   ),
 
+                  const SizedBox(width: 5),
+
                   Expanded(
                     child: Column(
                       children: [
+
+                        TextFormField(
+                          readOnly: true,
+                          onTap: () {
+                            openSelectUyelerDialog();
+                          },
+                          //initialValue: uyeler,
+                          // controller: TextEditingController()..text = uyeler,
+                          enabled: true,
+                          keyboardType: TextInputType.name,
+                          autofocus: true,
+                          style: const TextStyle(fontSize: 14, color: Colors.black),
+                          decoration: CommonTextField.buildCustomFormDecoration(label: "Randevu Üyeleri"),
+                        ),
 
                         StreamBuilder<dynamic>(
                           stream: widget.getBookingStream(start: startOfDay, end: endOfDay),
