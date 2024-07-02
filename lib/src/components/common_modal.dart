@@ -17,7 +17,8 @@ class CommonModal{
   }) async {
     SelectDialog.showModal<dynamic>(
       context,
-      label: Text(label, style: TextStyle(fontWeight: Platform.isMacOS ? FontWeight.w300 : FontWeight.normal, color: Colors.deepOrange, fontSize: 22)),
+      label: label,
+      titleStyle: TextStyle(fontWeight: Platform.isMacOS ? FontWeight.w300 : FontWeight.normal, color: Colors.deepOrange, fontSize: 22),
       multipleSelectedValues: multipleSelectedValues,
       items: itemList,
       searchBoxDecoration: InputDecoration(hintText: hintText),
