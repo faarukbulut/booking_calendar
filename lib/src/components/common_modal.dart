@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:select_dialog/select_dialog.dart';
 
@@ -15,8 +17,7 @@ class CommonModal{
   }) async {
     SelectDialog.showModal<dynamic>(
       context,
-      label: label,
-      titleStyle: const TextStyle(color: Colors.deepOrange, fontSize: 22),
+      label: Text(label, style: TextStyle(fontWeight: Platform.isMacOS ? FontWeight.w300 : FontWeight.normal, color: Colors.deepOrange, fontSize: 22)),
       multipleSelectedValues: multipleSelectedValues,
       items: itemList,
       searchBoxDecoration: InputDecoration(hintText: hintText),
@@ -24,12 +25,12 @@ class CommonModal{
       alwaysShowScrollBar: true,
       itemBuilder: itemBuilder,
       onMultipleItemsChange: onMultipleItemsChange,
-      emptyBuilder: (context) => const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+      emptyBuilder: (context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Center(
           child: Text(
             "Seçenek Bulunamadı.\nForm dışına tıklayarak sayfadan çıkış yapabilirsiniz.",
-            style: TextStyle(fontSize: 20, color: Colors.black),
+            style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: Platform.isMacOS ? FontWeight.w300 : FontWeight.normal),
           ),
         ),
       ),
