@@ -150,7 +150,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
         setState(() {
           uyeler = "";
           selectedUyelerValues = item;
-          item.map((e) => {uyeler = '$uyeler, ${e['adi']}'}).toList();
+          item.map((e) => {uyeler = '$uyeler, ${e.adi}'}).toList();
           uyeler = uyeler.substring(1);
         });
 
@@ -169,7 +169,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
             trailing: isSelected ? const Icon(Icons.check) : null,
             selected: isSelected,
             title: Text(
-              item['adi'],
+              item.adi,
               style: TextStyle(
                 fontSize: 18,
                 color: isSelected ? Colors.indigo : Colors.black87,
