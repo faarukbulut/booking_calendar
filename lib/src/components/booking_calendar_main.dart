@@ -24,6 +24,7 @@ class BookingCalendarMain extends StatefulWidget {
     required this.selectedRadio,
     required this.radioOnChanged,
     required this.uyelerList,
+    required this.uyeListChanged,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
     this.formatDateTime,
@@ -81,6 +82,7 @@ class BookingCalendarMain extends StatefulWidget {
   late int selectedRadio;
   final ValueChanged<int> radioOnChanged;
   final List uyelerList;
+  final ValueChanged<List> uyeListChanged;
 
   @override
   State<BookingCalendarMain> createState() => _BookingCalendarMainState();
@@ -152,6 +154,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
           selectedUyelerValues = item;
           item.map((e) => {uyeler = '$uyeler, ${e.adi}'}).toList();
           uyeler = uyeler.substring(1);
+          widget.uyeListChanged(selectedUyelerValues);
         });
 
         print(selectedUyelerValues.length);
@@ -263,8 +266,8 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           onTap: () {
                             openSelectUyelerDialog();
                           },
-                          //initialValue: uyeler,
-                          // controller: TextEditingController()..text = uyeler,
+                          // initialValue: uyeler,
+                          controller: TextEditingController()..text = uyeler,
                           enabled: true,
                           keyboardType: TextInputType.name,
                           autofocus: true,

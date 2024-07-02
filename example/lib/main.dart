@@ -75,7 +75,11 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
     {'id': 1, 'adi': 'faruk'},
     {'id': 2, 'adi': 'kaan'},
   ];
-  
+
+  uyeListChanged(dynamic value){
+    print('gelen liste : $value');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -95,6 +99,8 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               randevuIptal: iptalRandevu,
               selectedRadio: selectedRadio,
               radioOnChanged: (val){},
+              uyelerList: uyelerList,
+              uyeListChanged: (val){uyeListChanged(val);},
               pauseSlotText: 'LUNCH',
               hideBreakTime: false,
               loadingWidget: const Text('Fetching data...'),
@@ -103,7 +109,6 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               wholeDayIsBookedWidget: const Text('Sorry, for this day everything is booked'),
               bookingGridCrossAxisCount: 6,
               randevuIptalButtonColor: Colors.red,
-              uyelerList: uyelerList,
             ),
           ),
         ));
