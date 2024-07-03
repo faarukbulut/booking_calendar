@@ -162,6 +162,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
             }
             else {
               uyeler = '$uyeler, ${e.adi}';
+              uyeler = uyeler.substring(1);
             }
           }).toList();
 
