@@ -150,10 +150,21 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
       multipleSelectedValues: selectedUyelerValues,
       onMultipleItemsChange: (item) {
         setState(() {
-          uyeler = "";
           selectedUyelerValues = item;
-          item.map((e) => {uyeler = '$uyeler, ${e.adi}'}).toList();
-          uyeler = uyeler.substring(1);
+          uyeler = "";
+
+          item.map((e) {
+            if(selectedUyelerValues.isEmpty){
+              uyeler = "";
+            }
+            else if (selectedUyelerValues.length == 1) {
+              uyeler = e.adi;
+            }
+            else {
+              uyeler = '$uyeler, ${e.adi}';
+            }
+          }).toList();
+
           widget.uyeListChanged(selectedUyelerValues);
         });
       },
