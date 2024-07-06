@@ -18,6 +18,7 @@ class BookingCalendar extends StatelessWidget {
       required this.radioOnChanged,
       required this.uyelerList,
       required this.uyeListChanged,
+      required this.tur,
       this.bookingGridCrossAxisCount,
       this.bookingGridChildAspectRatio,
       this.formatDateTime,
@@ -130,6 +131,7 @@ class BookingCalendar extends StatelessWidget {
   final ValueChanged<int> radioOnChanged;
   final List uyelerList;
   final ValueChanged<List> uyeListChanged;
+  final String tur;
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +147,7 @@ class BookingCalendar extends StatelessWidget {
         radioOnChanged: radioOnChanged,
         uyelerList: uyelerList,
         uyeListChanged: uyeListChanged,
+        tur: tur,
         bookingButtonColor: bookingButtonColor,
         randevuIptalButtonColor: randevuIptalButtonColor,
         bookingGridChildAspectRatio: bookingGridChildAspectRatio,

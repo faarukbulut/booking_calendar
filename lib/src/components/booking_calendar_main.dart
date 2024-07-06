@@ -25,6 +25,7 @@ class BookingCalendarMain extends StatefulWidget {
     required this.radioOnChanged,
     required this.uyelerList,
     required this.uyeListChanged,
+    required this.tur,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
     this.formatDateTime,
@@ -83,6 +84,7 @@ class BookingCalendarMain extends StatefulWidget {
   final ValueChanged<int> radioOnChanged;
   final List uyelerList;
   final ValueChanged<List> uyeListChanged;
+  final String tur;
 
   @override
   State<BookingCalendarMain> createState() => _BookingCalendarMainState();
@@ -445,15 +447,16 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            Expanded(
-                              child: CommonButton(
-                                text: 'Randevu İptal',
-                                onTap: () async {
-                                  widget.randevuIptal();
-                                },
-                                buttonActiveColor: widget.randevuIptalButtonColor,
+                            if(widget.tur == "update")
+                              Expanded(
+                                child: CommonButton(
+                                  text: 'Randevu İptal',
+                                  onTap: () async {
+                                    widget.randevuIptal();
+                                  },
+                                  buttonActiveColor: widget.randevuIptalButtonColor,
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ],
