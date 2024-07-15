@@ -271,7 +271,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                   Expanded(
                     child: Column(
                       children: [
-
+                        if(widget.tur != "item-add")
                         TextFormField(
                           readOnly: true,
                           onTap: () {
