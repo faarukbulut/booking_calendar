@@ -147,7 +147,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
   void openSelectUyelerDialog() {
     CommonModal.buildMultiSelectDialogField(
       context: context,
-      label: "Konuklar",
+      label: "Üyeler",
       itemList: widget.uyelerList,
       multipleSelectedValues: selectedUyelerValues,
       onMultipleItemsChange: (item) {
@@ -283,7 +283,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                           keyboardType: TextInputType.name,
                           autofocus: true,
                           style: const TextStyle(fontSize: 14, color: Colors.black),
-                          decoration: CommonTextField.buildCustomFormDecoration(label: "Konuklar"),
+                          decoration: CommonTextField.buildCustomFormDecoration(label: "Üyeler"),
                         ),
 
                         StreamBuilder<dynamic>(
