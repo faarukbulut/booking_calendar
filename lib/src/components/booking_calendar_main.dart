@@ -1,6 +1,7 @@
 import 'package:booking_calendar/src/components/common_modal.dart';
 import 'package:booking_calendar/src/components/common_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/button/gf_button.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:table_calendar/table_calendar.dart' as tc show StartingDayOfWeek;
@@ -144,55 +145,184 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
     return -1;
   }
 
-  void openSelectUyelerDialog() {
-    CommonModal.buildMultiSelectDialogField(
+  void openSelectUyelerDialog() async{
+    await showDialog(
       context: context,
-      label: "Üyeler",
-      itemList: widget.uyelerList,
-      multipleSelectedValues: selectedUyelerValues,
-      onMultipleItemsChange: (item) {
-        setState(() {
-          selectedUyelerValues = item;
-          uyeler = "";
+      barrierDismissible: false,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: SizedBox(
+            height: 500,
+            width: 400,
+            child: StatefulBuilder(
+              builder: (context, setState){
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Üyeler",
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.red,
+                            fontSize: 24,
+                          ),
+                        ),
+                        const Spacer(),
+                        //kapat buton
+                        SizedBox(
+                          width: 35,
+                          height: 30,
+                          child: GFButton(
+                              //buttonBoxShadow: true,
+                              color: Colors.grey[500]!,
+                              hoverColor: Colors.red,
+                              ////shape: GFButtonShape.square,
+                              padding: const EdgeInsets.only(left: 7),
+                              icon: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                              child: const Text(""),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }),
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 10),
+                    const Row(
+                      children: [
+                        Text('Ad Soyad'),
+                        Spacer(),
+                        Text('Üye'),
+                        SizedBox(width: 20),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: widget.uyelerList.length,
+                        separatorBuilder: (context, _) => const SizedBox(height: 3),
+                        itemBuilder: (context, i){
+                          bool isUyeCheck = selectedUyelerValues.any((e) => e.id == widget.uyelerList[i].id);
+                          return Card(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              side: const BorderSide(
+                                color: Colors.indigo,
+                                width: 1,
+                              ),
+                            ),
+                            shadowColor: Colors.indigo,
+                            color: const Color.fromRGBO(255, 255, 255, 1),
+                            child: ListTile(
+                              title: Text(
+                                widget.uyelerList[i].adi ?? "",
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              trailing: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (isUyeCheck) {
+                                        selectedUyelerValues.removeWhere((e) => e.id == widget.uyelerList[i].id);
+                                      } else {
+                                        selectedUyelerValues.add(widget.uyelerList[i]);
+                                        
+                                      }
+                                      setState(() {});
+                                      widget.uyeListChanged(selectedUyelerValues);
+                                    },
+                                    child: isUyeCheck == true
+                                        ? const Icon(Icons.check_box, color: Colors.green)
+                                        : const Icon(Icons.check_box_outline_blank, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
 
-          item.map((e) {
-            if(selectedUyelerValues.isEmpty){
-              uyeler = "";
-            }
-            else if (selectedUyelerValues.length == 1) {
-              uyeler = e.adi;
-            }
-            else {
-              uyeler = '$uyeler, ${e.adi}';
-              uyeler = uyeler.substring(1);
-            }
-          }).toList();
 
-          widget.uyeListChanged(selectedUyelerValues);
-        });
-      },
-      itemBuilder: (BuildContext context, item, bool isSelected) {
-        return Container(
-          decoration: !isSelected
-              ? null
-              : BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-          child: ListTile(
-            trailing: isSelected ? const Icon(Icons.check) : null,
-            selected: isSelected,
-            title: Text(
-              item.adi,
-              style: TextStyle(
-                fontSize: 18,
-                color: isSelected ? Colors.indigo : Colors.black87,
-              ),
-            ),
+
+
+
+                          );
+                        },
+                      )
+                    ),
+                  ],
+                );
+              },
+            )
           ),
         );
-      },
+      }
     );
+
+
+
+
+    // CommonModal.buildMultiSelectDialogField(
+    //   context: context,
+    //   label: "Üyeler",
+    //   itemList: widget.uyelerList,
+    //   multipleSelectedValues: selectedUyelerValues,
+    //   onMultipleItemsChange: (item) {
+    //     setState(() {
+    //       selectedUyelerValues = item;
+    //       uyeler = "";
+
+    //       item.map((e) {
+    //         if(selectedUyelerValues.isEmpty){
+    //           uyeler = "";
+    //         }
+    //         else if (selectedUyelerValues.length == 1) {
+    //           uyeler = e.adi;
+    //         }
+    //         else {
+    //           uyeler = '$uyeler, ${e.adi}';
+    //           uyeler = uyeler.substring(1);
+    //         }
+    //       }).toList();
+
+    //       widget.uyeListChanged(selectedUyelerValues);
+    //     });
+    //   },
+    //   itemBuilder: (BuildContext context, item, bool isSelected) {
+    //     return Container(
+    //       decoration: !isSelected
+    //           ? null
+    //           : BoxDecoration(
+    //               borderRadius: BorderRadius.circular(5),
+    //               color: Colors.white,
+    //             ),
+    //       child: ListTile(
+    //         trailing: isSelected ? const Icon(Icons.check) : null,
+    //         selected: isSelected,
+    //         title: Text(
+    //           item.adi,
+    //           style: TextStyle(
+    //             fontSize: 18,
+    //             color: isSelected ? Colors.indigo : Colors.black87,
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   @override
