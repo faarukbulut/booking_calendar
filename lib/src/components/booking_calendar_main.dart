@@ -325,7 +325,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                           isBooked: controller.isSlotBooked(index),
                                           isSelected: index == controller.selectedSlot,
                                           onTap: (){
-                                            if(selectedUyelerValues.isNotEmpty){
+                                            if(widget.uyelerList.isNotEmpty && selectedUyelerValues.isNotEmpty){
                                               controller.selectSlot(index);
                                             }
                                           },
