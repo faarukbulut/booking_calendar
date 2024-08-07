@@ -324,7 +324,11 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                           isPauseTime: controller.isSlotInPauseTime(slot),
                                           isBooked: controller.isSlotBooked(index),
                                           isSelected: index == controller.selectedSlot,
-                                          onTap: () => controller.selectSlot(index),
+                                          onTap: (){
+                                            if(selectedUyelerValues.isNotEmpty){
+                                              controller.selectSlot(index);
+                                            }
+                                          },
                                           slotDate: slot,
                                           child: Center(
                                             child: Text(
