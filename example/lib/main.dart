@@ -101,7 +101,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               radioOnChanged: (val){},
               uyelerList: uyelerList,
               uyeListChanged: (val){uyeListChanged(val);},
-              tur: "update",
+              tur: "randevu-guncelle",
               pauseSlotText: 'LUNCH',
               hideBreakTime: false,
               loadingWidget: const Text('Fetching data...'),

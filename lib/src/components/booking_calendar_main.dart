@@ -88,7 +88,7 @@ class BookingCalendarMain extends StatefulWidget {
   final List uyelerList;
   final ValueChanged<List> uyeListChanged;
   final String tur;
-  final bool toplanti;
+  late bool toplanti;
   final List yetkililerList;
   final ValueChanged<List> yetkiliListChanged;
 
@@ -330,42 +330,57 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                   Expanded(
                     child: Column(
                       children: [
-                        if(widget.tur != "item-add")
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                readOnly: true,
-                                onTap: () {
-                                  openSelectUyelerDialog();
-                                },
-                                // initialValue: uyeler,
-                                controller: TextEditingController()..text = uyeler,
-                                enabled: true,
-                                keyboardType: TextInputType.name,
-                                autofocus: true,
-                                style: const TextStyle(fontSize: 14, color: Colors.black),
-                                decoration: CommonTextField.buildCustomFormDecoration(label: "Üyeler"),
+            
+                        if(widget.tur == "randevu-guncelle")
+                          TextFormField(
+                            readOnly: true,
+                            onTap: () {
+                              openSelectUyelerDialog();
+                            },
+                            controller: TextEditingController()..text = uyeler,
+                            enabled: true,
+                            keyboardType: TextInputType.name,
+                            autofocus: true,
+                            style: const TextStyle(fontSize: 14, color: Colors.black),
+                            decoration: CommonTextField.buildCustomFormDecoration(label: "Üyeler"),
+                          ),
+
+                        if(widget.tur == "randevu-guncelle" || widget.tur == "item-add")
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: widget.toplanti, 
+                                onChanged: (val){
+                                  setState(() {
+                                    widget.toplanti = val as bool;
+                                  });
+                                }
                               ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: TextFormField(
-                                readOnly: true,
-                                onTap: () {
-                                  openSelectYetkililerDialog();
-                                },
-                                // initialValue: uyeler,
-                                controller: TextEditingController()..text = yetkililer,
-                                enabled: true,
-                                keyboardType: TextInputType.name,
-                                autofocus: true,
-                                style: const TextStyle(fontSize: 14, color: Colors.black),
-                                decoration: CommonTextField.buildCustomFormDecoration(label: "Yetkililer"),
+                              const Text('Müşteri Toplantısı'),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: TextFormField(
+                                  readOnly: true,
+                                  onTap: () {
+                                    openSelectYetkililerDialog();
+                                  },
+                                  controller: TextEditingController()..text = yetkililer,
+                                  enabled: true,
+                                  keyboardType: TextInputType.name,
+                                  autofocus: true,
+                                  style: const TextStyle(fontSize: 14, color: Colors.black),
+                                  decoration: CommonTextField.buildCustomFormDecoration(label: "Yetkililer"),
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (widget.toplanti == true && selectedYetkililerValues.isEmpty) return "Seçim Zorunludur";
+
+                                    return null;
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+
 
                         StreamBuilder<dynamic>(
                           stream: widget.getBookingStream(start: startOfDay, end: endOfDay),
@@ -528,7 +543,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            if(widget.tur == "update")
+                            if(widget.tur == "randevu-guncelle")
                               Expanded(
                                 child: CommonButton(
                                   text: 'Randevu İptal',
