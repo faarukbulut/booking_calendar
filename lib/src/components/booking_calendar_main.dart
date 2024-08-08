@@ -347,6 +347,11 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                             autofocus: true,
                             style: const TextStyle(fontSize: 14, color: Colors.black),
                             decoration: CommonTextField.buildCustomFormDecoration(label: "Üyeler"),
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value != null) return null;
+                              return "Zorunlu alan";
+                            },
                           ),
 
                         if(widget.tur == "randevu-guncelle" || widget.tur == "item-add")
@@ -548,7 +553,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                     return;
                                   }
                                   formKey.currentState!.save();
-                                  
+
                                   widget.randevuGuncelle(controller.generateNewBookingForUploading());
                                 },
                                 isDisabled: controller.selectedSlot == -1,
