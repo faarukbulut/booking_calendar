@@ -99,6 +99,8 @@ class BookingCalendarMain extends StatefulWidget {
 }
 
 class _BookingCalendarMainState extends State<BookingCalendarMain> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   late BookingController controller;
   final now = DateTime.now();
   List selectedUyelerValues = [];
@@ -362,23 +364,26 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               const Text('Müşteri Toplantısı'),
                               const SizedBox(width: 10),
                               Expanded(
-                                child: TextFormField(
-                                  readOnly: true,
-                                  onTap: () {
-                                    openSelectYetkililerDialog();
-                                  },
-                                  controller: TextEditingController()..text = yetkililer,
-                                  enabled: true,
-                                  keyboardType: TextInputType.name,
-                                  autofocus: true,
-                                  style: const TextStyle(fontSize: 14, color: Colors.black),
-                                  decoration: CommonTextField.buildCustomFormDecoration(label: "Yetkililer"),
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                                  validator: (value) {
-                                    if (widget.toplanti == true && selectedYetkililerValues.isEmpty) return "Seçim Zorunludur";
-
-                                    return null;
-                                  },
+                                child: Form(
+                                  key: formKey,
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    onTap: () {
+                                      openSelectYetkililerDialog();
+                                    },
+                                    controller: TextEditingController()..text = yetkililer,
+                                    enabled: true,
+                                    keyboardType: TextInputType.name,
+                                    autofocus: true,
+                                    style: const TextStyle(fontSize: 14, color: Colors.black),
+                                    decoration: CommonTextField.buildCustomFormDecoration(label: "Yetkililer"),
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (widget.toplanti == true && selectedYetkililerValues.isEmpty) return "Seçim Zorunludur";
+                                  
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
@@ -539,6 +544,11 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               child: CommonButton(
                                 text: 'Randevu Ata',
                                 onTap: () async {
+                                  if (!formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  formKey.currentState!.save();
+                                  
                                   widget.randevuGuncelle(controller.generateNewBookingForUploading());
                                 },
                                 isDisabled: controller.selectedSlot == -1,
