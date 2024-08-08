@@ -20,6 +20,7 @@ class BookingCalendar extends StatelessWidget {
       required this.uyeListChanged,
       required this.tur,
       required this.toplanti,
+      required this.toplantiChanged,
       required this.yetkililerList,
       required this.yetkiliListChanged,
       this.bookingGridCrossAxisCount,
@@ -136,6 +137,7 @@ class BookingCalendar extends StatelessWidget {
   final ValueChanged<List> uyeListChanged;
   final String tur;
   final bool toplanti;
+  final ValueChanged<bool> toplantiChanged;
   final List yetkililerList;
   final ValueChanged<List> yetkiliListChanged;
 
@@ -155,6 +157,7 @@ class BookingCalendar extends StatelessWidget {
         uyeListChanged: uyeListChanged,
         tur: tur,
         toplanti: toplanti,
+        toplantiChanged: toplantiChanged,
         yetkililerList: yetkililerList,
         yetkiliListChanged: yetkiliListChanged,
         bookingButtonColor: bookingButtonColor,

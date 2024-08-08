@@ -27,6 +27,7 @@ class BookingCalendarMain extends StatefulWidget {
     required this.uyeListChanged,
     required this.tur,
     required this.toplanti,
+    required this.toplantiChanged,
     required this.yetkililerList,
     required this.yetkiliListChanged,
     this.bookingGridCrossAxisCount,
@@ -89,6 +90,7 @@ class BookingCalendarMain extends StatefulWidget {
   final ValueChanged<List> uyeListChanged;
   final String tur;
   late bool toplanti;
+  final ValueChanged<bool> toplantiChanged;
   final List yetkililerList;
   final ValueChanged<List> yetkiliListChanged;
 
@@ -353,6 +355,7 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                                 onChanged: (val){
                                   setState(() {
                                     widget.toplanti = val as bool;
+                                    widget.toplantiChanged(val);
                                   });
                                 }
                               ),

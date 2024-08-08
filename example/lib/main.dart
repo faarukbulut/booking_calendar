@@ -111,6 +111,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               bookingGridCrossAxisCount: 6,
               randevuIptalButtonColor: Colors.red,
               toplanti: false,
+              toplantiChanged: (val){},
               yetkililerList: [],
               yetkiliListChanged: (val){},
             ),
