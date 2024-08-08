@@ -26,6 +26,9 @@ class BookingCalendarMain extends StatefulWidget {
     required this.uyelerList,
     required this.uyeListChanged,
     required this.tur,
+    required this.toplanti,
+    required this.yetkililerList,
+    required this.yetkiliListChanged,
     this.bookingGridCrossAxisCount,
     this.bookingGridChildAspectRatio,
     this.formatDateTime,
@@ -85,6 +88,9 @@ class BookingCalendarMain extends StatefulWidget {
   final List uyelerList;
   final ValueChanged<List> uyeListChanged;
   final String tur;
+  final bool toplanti;
+  final List yetkililerList;
+  final ValueChanged<List> yetkiliListChanged;
 
   @override
   State<BookingCalendarMain> createState() => _BookingCalendarMainState();
@@ -94,7 +100,9 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
   late BookingController controller;
   final now = DateTime.now();
   List selectedUyelerValues = [];
+  List selectedYetkililerValues = [];
   String uyeler = "";
+  String yetkililer = "";
 
   @override
   void initState() {
@@ -169,6 +177,57 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
           }).toList();
 
           widget.uyeListChanged(selectedUyelerValues);
+        });
+      },
+      itemBuilder: (BuildContext context, item, bool isSelected) {
+        return Container(
+          decoration: !isSelected
+              ? null
+              : BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                ),
+          child: ListTile(
+            trailing: isSelected ? const Icon(Icons.check) : null,
+            selected: isSelected,
+            title: Text(
+              item.adi,
+              style: TextStyle(
+                fontSize: 18,
+                color: isSelected ? Colors.indigo : Colors.black87,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void openSelectYetkililerDialog() {
+    CommonModal.buildMultiSelectDialogField(
+      context: context,
+      label: "Yetkililer",
+      itemList: widget.yetkililerList,
+      multipleSelectedValues: selectedYetkililerValues,
+      onMultipleItemsChange: (item) {
+        setState(() {
+          selectedYetkililerValues = item;
+          yetkililer = "";
+
+          item.map((e) {
+            if(selectedYetkililerValues.isEmpty){
+              yetkililer = "";
+            }
+            else if (selectedYetkililerValues.length == 1) {
+              yetkililer = e.adi;
+            }
+            else {
+              yetkililer = '$yetkililer, ${e.adi}';
+              yetkililer = yetkililer.substring(1);
+            }
+          }).toList();
+
+          widget.yetkiliListChanged(selectedYetkililerValues);
         });
       },
       itemBuilder: (BuildContext context, item, bool isSelected) {
@@ -272,18 +331,40 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                     child: Column(
                       children: [
                         if(widget.tur != "item-add")
-                        TextFormField(
-                          readOnly: true,
-                          onTap: () {
-                            openSelectUyelerDialog();
-                          },
-                          // initialValue: uyeler,
-                          controller: TextEditingController()..text = uyeler,
-                          enabled: true,
-                          keyboardType: TextInputType.name,
-                          autofocus: true,
-                          style: const TextStyle(fontSize: 14, color: Colors.black),
-                          decoration: CommonTextField.buildCustomFormDecoration(label: "Üyeler"),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                readOnly: true,
+                                onTap: () {
+                                  openSelectUyelerDialog();
+                                },
+                                // initialValue: uyeler,
+                                controller: TextEditingController()..text = uyeler,
+                                enabled: true,
+                                keyboardType: TextInputType.name,
+                                autofocus: true,
+                                style: const TextStyle(fontSize: 14, color: Colors.black),
+                                decoration: CommonTextField.buildCustomFormDecoration(label: "Üyeler"),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: TextFormField(
+                                readOnly: true,
+                                onTap: () {
+                                  openSelectYetkililerDialog();
+                                },
+                                // initialValue: uyeler,
+                                controller: TextEditingController()..text = yetkililer,
+                                enabled: true,
+                                keyboardType: TextInputType.name,
+                                autofocus: true,
+                                style: const TextStyle(fontSize: 14, color: Colors.black),
+                                decoration: CommonTextField.buildCustomFormDecoration(label: "Yetkililer"),
+                              ),
+                            ),
+                          ],
                         ),
 
                         StreamBuilder<dynamic>(

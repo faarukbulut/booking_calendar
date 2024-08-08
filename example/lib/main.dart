@@ -110,6 +110,9 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
               wholeDayIsBookedWidget: const Text('Sorry, for this day everything is booked'),
               bookingGridCrossAxisCount: 6,
               randevuIptalButtonColor: Colors.red,
+              toplanti: false,
+              yetkililerList: [],
+              yetkiliListChanged: (val){},
             ),
           ),
         ));
