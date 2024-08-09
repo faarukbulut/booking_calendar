@@ -549,10 +549,10 @@ class _BookingCalendarMainState extends State<BookingCalendarMain> {
                               child: CommonButton(
                                 text: 'Randevu Ata',
                                 onTap: () async {
-                                  // if (!formKey.currentState!.validate()) {
-                                  //   return;
-                                  // }
-                                  // formKey.currentState!.save();
+                                  if (!formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  formKey.currentState!.save();
 
                                   widget.randevuGuncelle(controller.generateNewBookingForUploading());
                                 },
